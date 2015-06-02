@@ -1,0 +1,182 @@
+<?php
+
+/**
+ * @file
+ * Easy Module is a friendly tool to generate modules' skeleton.
+ */
+
+/**
+ * Implements hook_permission().
+ *
+ * @return Assoc
+ *   permission items.
+ */
+function easy_module_permission() {
+  return array(
+    'administer easy_module' => array(
+      'title' => t('Administer "Easy Module"'),
+      'description' => t('Administer the "Easy Module" module.'),
+    ),
+    'create module easy_module' => array(
+      'title' => t('Generate a Module using "Easy Module"'),
+      'description' => t('Create the skeleton for a module using the "Easy Module" module.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ *
+ * @return Assoc
+ *   menu items.
+ */
+function easy_module_menu() {
+  $items = array();
+  $items['admin/config/development/easy-module'] = array(
+    'title' => 'Easy Module',
+    'description' => 'General settings for "Easy Module"',
+    'file' => 'includes/easy_module.admin.inc',
+    'page callback' => '_easy_module_general_settings_page',
+    'page arguments' => array(),
+    'access arguments' => array('administer easy_module'),
+  );
+  $items['admin/config/development/easy-module/general'] = array(
+    'title' => 'General settings',
+    'description' => 'General settings for "Easy Module"',
+    'file' => 'includes/easy_module.admin.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('_easy_module_general_settings_form'),
+    'access arguments' => array('administer easy_module'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+  );
+  $items['admin/modules/easy-module/create'] = array(
+    'title' => 'Create new Module',
+    'description' => 'Generate the skeleton for a new Module using the "Easy Module" module',
+    'file' => 'includes/easy_module.blocks.inc',
+    'page callback' => '_easy_module_generation_page',
+    'page arguments' => array(),
+    'access arguments' => array('create module easy_module'),
+  );
+  $items['easy-module/hook-info/%/%'] = array(
+    'title' => 'Get the information of the requested Hook',
+    'description' => 'Get the information of the requested Hook',
+    'file' => 'includes/easy_module.blocks.inc',
+    'page callback' => '_easy_module_hook_code_ajax',
+    'page arguments' => array(2, 3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ *
+ * @return Assoc
+ *   the blocks' info.
+ */
+function easy_module_block_info() {
+  $block = array();
+  $block['easy_module_generator'] = array(
+    'info' => t('Easy Module Generator'),
+  );
+  return $block;
+}
+
+/**
+ * Implements hook_block_view().
+ *
+ * @param String $delta
+ *   the identifier of the requested block.
+ *
+ * @return Assoc
+ *   the requested block's view.
+ */
+function easy_module_block_view($delta = NULL) {
+  $block = array();
+  switch ($delta) {
+    case 'easy_module_generator':
+      require_once 'includes/easy_module.blocks.inc';
+      $block['subject'] = NULL;
+      $block['content'] = _easy_module_generation_page();
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * @param array $existing
+ *   An array of existing implementations that may be used for override
+ *   purposes. This is primarily useful for themes that may wish to examine
+ *   existing implementations to extract data (such as arguments) so that it may
+ *   properly register its own, higher priority implementations.
+ * @param string $type
+ *   Whether a theme, module, etc. is being processed. This is primarily useful
+ *   so that themes tell if they are the actual theme being called or a parent
+ *   theme. May be one of: 'module': A module is being checked for theme
+ *   implementations. 'base_theme_engine': A theme engine is being checked for a
+ *   theme that is a parent of the actual theme being used. 'theme_engine': A
+ *   theme engine is being checked for the actual theme being used.
+ *   'base_theme': A base theme is being checked for theme implementations.
+ *   'theme': The actual theme in use is being checked.
+ * @param string $theme
+ *   The actual name of theme, module, etc. that is being being processed.
+ * @param array $path
+ *   An associative array of theme hook information.
+ *
+ * @return Assoc
+ *   Themes.
+ */
+function easy_module_theme($existing, $type, $theme, $path) {
+  $path = drupal_get_path('module', EasyModuleConstants::MODULE_NAME) . '/tpl';
+  return array(
+    'easy_module-hooks' => array(
+      'path' => $path,
+      'template' => 'easy_module-hooks',
+      'variables' => array(
+        'hooks_data' => array(),
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_library().
+ *
+ * @return Assoc
+ *   implemented libraries.
+ */
+function easy_module_library() {
+  $libraries = array();
+  $module_path = drupal_get_path('module', EasyModuleConstants::MODULE_NAME);
+  $libraries['datatables'] = array(
+    'title' => 'DataTables',
+    'website' => 'http://datatables.net/',
+    'version' => '1.9.1',
+    'js' => array(
+      $module_path . '/js/libs/datatables/js/jquery.dataTables.min.js' => array(),
+    ),
+    'css' => array(
+      $module_path . '/js/libs/datatables/css/jquery.dataTables.css' => array(),
+      $module_path . '/js/libs/datatables/css/jquery.dataTables_themeroller.css' => array(),
+    ),
+  );
+  $libraries['syntaxhighlighter'] = array(
+    'title' => 'SyntaxHighlighter',
+    'website' => 'http://alexgorbatchev.com/SyntaxHighlighter/',
+    'version' => '3.0.83',
+    'js' => array(
+      $module_path . '/js/libs/SyntaxHighlighter/scripts/XRegExp.js' => array(),
+      $module_path . '/js/libs/SyntaxHighlighter/scripts/shCore.js' => array(),
+      $module_path . '/js/libs/SyntaxHighlighter/scripts/shBrushPhp.js' => array(),
+    ),
+    'css' => array(
+      $module_path . '/js/libs/SyntaxHighlighter/styles/shCore.css' => array(),
+      $module_path . '/js/libs/SyntaxHighlighter/styles/shThemeDefault.css' => array(),
+    ),
+  );
+  return $libraries;
+}

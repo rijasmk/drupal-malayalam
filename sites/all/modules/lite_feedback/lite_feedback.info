@@ -1,0 +1,6 @@
+name = Lite Feedback
+description = A Simple and Light Feedback Form. Customizable Form Title, Field Labels, Submit Button Text. CAPTCHA option, if module CAPTCHA (https://drupal.org/project/captcha) enabled. Customizable To email addresses.
+core = 7.x
+configure = admin/config/lite-feedback
+files[] = lite_feedback.module
+files[] = lite_feedback.install

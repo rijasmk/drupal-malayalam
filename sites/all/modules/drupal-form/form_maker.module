@@ -1,0 +1,1827 @@
+<?php
+/**
+ * @file
+ * This module allow to create forms for Drupal 7.
+ *
+ * Written by Webdorado team.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function form_maker_help($path, $arg) {
+  switch ($path) {
+    case "admin/help#form_maker":
+      $output = '';
+      $output .= '<h3>' . t("Form Maker module help.") . '</h3>';
+      $output .= '<p>' . t("
+      To show HTML editor in <strong>ADD A NEW FIELD > Custom HTML</strong> download 'tinymce' library from <a href='http://github.com/downloads/tinymce/tinymce/tinymce_3.5.7.zip'>http://github.com/downloads/tinymce/tinymce/tinymce_3.5.7.zip</a> and extract it to sites/all/libraries/tinymce directory.<br />
+      To add more than 5 fields and add 'File Upload' or 'Map' fields you need to get full version on <a href='http://drupal.org/project/drupal-form'>http://drupal.org/project/drupal-form</a>.<br />
+      <h4><strong>Step 1: Creating a new Form.</strong></h4>
+      <p>
+        <strong>1.1 </strong>From the <strong>Navigation</strong> section on the left hand of the screen click on the <strong>Add content</strong> link.
+      </p>
+      <p>
+        <strong>1.2 </strong>Click on <strong>Form</strong> to create a new form using Form Maker.
+      </p>
+      <p>
+        <strong>1.3 </strong>Fill out the <strong>Title</strong> field. The <strong>Body </strong> field is optional. Click <strong>Save</strong> to save the created form and proceed to the Form Maker. Now you can add fields to your form. Pay attention to the buttons on the top of the 
+          <strong>Form Maker</strong> tab:
+          <ul type=\'disc\'>
+            <li><strong>Edit JavaScript: </strong>Here you can define new JavaScript functions, which can be applied to the form.</li>
+            <li><strong>Edit CSS: </strong>Here you can customize the form appearance by editing the CSS of the form.</li>
+            <li><strong>Custom text in e-mail: </strong>Here you can add custom texts or HTML to the e-mail message that is sent to the users or the administrator.<br /></li>
+          </ul>
+      </p>
+      <p>
+        <strong>1.4 </strong>On the right side you will see the<strong> Email to send submissions to</strong> field. Here you provide e-mails to which submitted form information is sent. If you need more than one e-mail address, you must separate them by commas. This field is not required. In any case, the submitted information is stored in
+          <strong>“Submissions”</strong> part, where it can be easily managed.<br />
+        <strong>1.5 </strong>Add new fields to your form by clicking on the <strong>ADD A NEW FIELD</strong> button (see the next step for the description of the fields).
+      </p>
+      <h4><strong>Step 2: Description of the form fields.</strong></h4>
+      <p>
+        <strong>2.1 Custom HTML: </strong> An HTML editor. You can insert your own HTML content to your Drupal Form.
+      </p>
+      <p>
+        <strong>2.2 Text Input: </strong>At first choose the <b>Field Type</b> according to your preference. There are several options:
+        <ul>
+          <li><b><u>Simple Text</u></b>: This can be used for typing some text.</li>
+          <li><b><u>Password:</u></b> This field can be used for adding a <b>password</b> field to your form.</li>
+          <li><b><u>Text Area:</u></b> This field can be used for typing some text. The difference between Text Area and Simple Text is that Simple Text has only one row while Text Area can have several rows.</li>
+          <li><b><u>Name</u></b>: This can be used for typing a name.</li>
+          <li><b><u>E-mail:</u></b> This field can be used for typing the submitter’s e-mail. The submitted e-mail validation is checked.</li>
+          <li><b><u>Hidden Field:</u></b> This field can be used to store additional information that does not need to be displayed.</li>
+        </ul>
+      </p>
+      <p>
+        <strong>2.3 Time and Date:</strong> At first choose the <b>Field Type</b> according to your preference. There are several options:
+        <ul>
+          <li><b><u>Date (single field with a picker):</u></b> This field can be used for typing a date or choosing by the picker.</li>
+          <li><b><u>Date (3 separate fields):</u></b> This field can be used for typing a date in 3 field format(day, month, year). Each of the 3 fields can be set as text input or select list.</li>
+          <li><b><u>Time:</u></b> This field can be used for typing a time. Time can be shown in 24 hour or 12 hour formats by setting the time format attribute.</li>
+        </ul>
+      </p>
+      <p>
+        <strong>2.4 Select:</strong> At first choose the <b>Field Type</b> according to your preference. There are several options:
+        <ul>
+          <li><b><u>Custom select:</u></b> This field can be used for selecting the values from a list. The list can be defined by Options attribute. You can easily add and remove list items. The checked items are considered as empty values.</li>
+          <li><b><u>Country list:</u></b> This field can be used for selecting a country from a list.</li>
+        </ul>
+      </p>
+      <p>
+        <strong>2.5 Checkbox:</strong> This field can be used for selecting the values from a list of <strong>checkboxes. </strong>
+          The list can be defined by Options attribute. You can easily add and remove list items. The list can be displayed in horizontal/vertical positions by setting the
+          <strong>Relative Position</strong> attribute.
+      </p>
+      <p>
+        <strong>2.6 Radio:</strong> This field can be used for selecting the values from a list of <strong>radio buttons</strong>. The list can be defined by Options attribute. You can easily add and remove list items. The list can be displayed in horizontal/vertical positions by setting the
+          <strong>Relative Position</strong> attribute.
+      </p>
+      <p>
+        <strong>2.7 File Upload:</strong> This field can be used for uploading a file. The size of the uploaded file can be limited by setting the value of <strong>Maximum Size</strong>
+          attribute in KB. The upload folder can be mentioned by setting the <strong>Destination</strong> attribute. Only files with extensions listed in <strong>Allowed file extensions</strong> attribute can be uploaded.
+      </p>
+      <p>
+        <strong>2.8 Captcha:</strong> This field can be used for the ensuring that the submission is generated by a person. The number of randomly generated symbols can be set by the value of <strong>Captcha size</strong> attribute.
+      </p>
+      <p>
+        <strong>2.9 Map:</strong> This field can be used for pointing out some position on the map. The position of the marker is fixed at the front end.
+      </p>
+      <p>
+        <strong>2.10 Button:</strong> At first choose the <b>Field Type</b> according to your preference.
+        <ul>
+          <li><b><u>Submit and Reset:</u></b> This field can be used for inserting a submit/reset button into the form. You can display reset button by checking the box called
+            <strong>Display reset button</strong>. Type the name of the submit and reset buttons in <strong>Submit button label</strong> and <strong>Reset button label</strong>.
+          </li>
+          <li><b><u>Custom:</u></b> This field can be used for inserting custom buttons into the form. Type the name of each button in button name field. You can define click functions for each button.</li>
+        </ul>
+      </p>
+      <h4><strong>Step 3: </strong>Managing submissions of the form.</h4>
+      <p>
+        <strong>3.1 </strong>Select a form and choose the last <strong> </strong> tab named <strong> Submissions </strong> to access the form submissions database.
+      </p>
+      <p>
+        <strong>3.2 </strong>It is possible to <strong>Edit</strong> or <strong>Delete</strong> the submissions.
+      </p>
+      <p>
+        <strong>3.3</strong> It is also possible to export the submissions database to <strong>CSV</strong> or <strong>XML</strong> formats.
+      </p>
+      <p>
+        <strong>3.4</strong> The <strong>Add/Remove Columns </strong> button allows adding or removing columns from the submissions list (All, ID, Submit date, Submitter’s IP address).
+      </p>
+      <p>
+        <strong>3.5 </strong> Use the <strong>From </strong> and <strong>To </strong> fields to filter the submissions by date.
+      </p>
+      ") . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function form_maker_permission() {
+  return array(
+    'access Form Maker administration' => array(
+      'title' => t('Administer Form Maker module'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
+ */
+function form_maker_form(&$node, $form_state) {
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#required' => TRUE,
+    '#default_value' => $node->title,
+    '#weight' => -5,
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function form_maker_form_alter(&$form, $form_state, $form_id) {
+  $matches = array();
+  if (isset($form['#node']->type) && $form_id == $form['#node']->type . '_node_form' && in_array($form['#node']->type, form_maker_variable_get('form_maker_node_types'))) {
+    $node = $form['#node'];
+    // Preserve all form_maker options currently set on the node.
+    $form['form_maker'] = array(
+      '#type' => 'value',
+      '#value' => $node->form_maker,
+    );
+    if (empty($node->nid) && in_array($node->type, form_maker_variable_get('form_maker_node_types_primary'))) {
+      $form['actions']['submit']['#submit'][] = 'form_maker_form_submit';
+    }
+  }
+}
+
+/**
+ * Implements hook_node_defaults().
+ */
+function form_maker_node_defaults() {
+  $defaults = array(
+    'confirmation' => '',
+    'confirmation_format' => NULL,
+    'redirect_url' => '<confirmation>',
+    'teaser' => '0',
+    'block' => '0',
+    'allow_draft' => '0',
+    'auto_save' => '0',
+    'submit_notice' => '1',
+    'submit_text' => '',
+    'submit_limit' => '-1',
+    'submit_interval' => '-1',
+    'total_submit_limit' => '-1',
+    'total_submit_interval' => '-1',
+    'status' => '1',
+    'record_exists' => FALSE,
+    'roles' => array('1', '2'),
+    'emails' => array(),
+    'components' => array(),
+  );
+  drupal_alter('form_maker_node_defaults', $defaults);
+  return $defaults;
+}
+
+/**
+ * Implements hook_node_prepare().
+ */
+function form_maker_node_prepare($node) {
+  $form_maker_types = form_maker_variable_get('form_maker_node_types');
+  if (in_array($node->type, $form_maker_types) && !isset($node->form_maker)) {
+    $node->form_maker = form_maker_node_defaults();
+  }
+}
+
+/**
+ * Implements hook_form_submit().
+ */
+function form_maker_form_submit($form, &$form_state) {
+  drupal_set_message(t('Add new fields to your form with the form below.'));
+  $form_state['redirect'] = 'node/' . $form_state['nid'] . '/form_maker';
+}
+
+/**
+ * Implements hook_node_type().
+ */
+function form_maker_node_type($op, $info) {
+  $form_maker_types = form_maker_variable_get('form_maker_node_types');
+  $affected_type = isset($info->old_type) ? $info->old_type : $info->type;
+  $key = array_search($affected_type, $form_maker_types);
+  if ($key !== FALSE) {
+    if ($op == 'update') {
+      $form_maker_types[$key] = $info->type;
+    }
+    if ($op == 'delete') {
+      unset($form_maker_types[$key]);
+    }
+    variable_set('form_maker_node_types', $form_maker_types);
+  }
+}
+
+/**
+ * Function form_maker_variable_get.
+ */
+function form_maker_variable_get($variable) {
+  switch ($variable) {
+    case 'form_maker_allowed_tags':
+      $result = variable_get('form_maker_allowed_tags', array(
+        'a',
+        'em',
+        'strong',
+        'code',
+        'img'));
+      break;
+
+    case 'form_maker_default_from_name':
+      $result = variable_get('form_maker_default_from_name', variable_get('site_name', ''));
+      break;
+
+    case 'form_maker_default_from_address':
+      $result = variable_get('form_maker_default_from_address', variable_get('site_mail', ini_get('sendmail_from')));
+      break;
+
+    case 'form_maker_default_subject':
+      $result = variable_get('form_maker_default_subject', t('Form submission from: %title'));
+      break;
+
+    case 'form_maker_node_types':
+      $result = variable_get('form_maker_node_types', array('form_maker'));
+      break;
+
+    case 'form_maker_node_types_primary':
+      $result = variable_get('form_maker_node_types_primary', array('form_maker'));
+      break;
+  }
+  return $result;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function form_maker_menu() {
+  $items = array();
+
+  $items['node/%form_maker_menu/form_maker'] = array(
+    'title' => 'Form maker',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_maker_page'),
+    'access arguments' => array('access Form Maker administration'),
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'weight' => 1,
+  );
+  $items['form_maker/captcha'] = array(
+    'page callback' => 'form_maker_captcha',
+    'access callback' => TRUE,
+    'file' => 'includes/form_maker_captcha.inc',
+  );
+  $items['node/%form_maker_menu/submissions'] = array(
+    'title' => 'Submissions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_maker_submissions'),
+    'access arguments' => array('access Form Maker administration'),
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'weight' => 2,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_admin_paths().
+ */
+function form_maker_admin_paths() {
+  if (variable_get('node_admin_theme')) {
+    return array(
+      'node/*/form_maker' => TRUE,
+      'node/*/form_maker/*' => TRUE,
+      'node/*/submissions' => TRUE,
+      'node/*/submissions/*' => TRUE,
+    );
+  }
+}
+
+/**
+ * Implements hook_menu_load().
+ */
+function form_maker_menu_load($nid) {
+  if (!is_numeric($nid)) {
+    return FALSE;
+  }
+  $node = node_load($nid);
+  if (!isset($node->type) || !in_array($node->type, form_maker_variable_get('form_maker_node_types'))) {
+    return FALSE;
+  }
+  return $node;
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function form_maker_node_view($node, $view_mode) {
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $nodeid = arg(1);
+  }
+  else {
+    $nodeid = '';
+  }
+  if (isset($_SESSION['submited' . $nodeid])) {
+    if ($_SESSION['submited' . $nodeid] != NULL) {
+      drupal_set_message($_SESSION['submited' . $nodeid], 'status', FALSE);
+    }
+  }
+  $_SESSION['submited' . $nodeid] = '';
+  if (!in_array($node->type, form_maker_variable_get('form_maker_node_types'))) {
+    return;
+  }
+  $teaser = $view_mode == 'teaser';
+  $page = arg(0) == 'node' && arg(1) == $node->nid;
+  if (($teaser) || empty($node->nid)) {
+    return;
+  }
+  if ($view_mode == 'full') {
+    $value = db_query("SELECT * FROM {form_maker_table} WHERE vid = :vid", array(':vid' => $nodeid));
+    $row = $value->fetchObject();
+    require_once "form_maker_functions.php";
+    if (!isset($_SESSION['form_maker_captcha'])) {
+      $_SESSION['form_maker_captcha'] = '';
+    }
+    $captcha_url = url('form_maker/captcha', array('query' => array('digit' => ''), 'absolute' => FALSE));
+    $captcha_rep_url = url('form_maker/captcha', array('query' => array('r2' => mt_rand(0, 1000), 'digit' => ''), 'absolute' => FALSE));
+    $sescaptcha = $_SESSION['form_maker_captcha'];
+    $fc_frontend = "";
+    if (isset($_POST["counter"])) {
+      $ok = form_maker_savedata($row->id, $fc_frontend, $sescaptcha);
+      if (is_numeric($ok)) {
+        form_maker_remove($ok);
+      }
+    }
+    drupal_add_js(str_replace("", " ", $row->javascript), array('type' => 'inline'));
+    $fc_frontend .= '<style>' . str_replace("", " ", $row->css) . '</style>';
+
+    $fc_frontend .= '
+      <input type="hidden" id="file_location_root" value="' . base_path() . drupal_get_path('module', 'form_maker') . '"  />
+      <input type="hidden" id="upload_location" value="' . base_path() . drupal_get_path('module', 'form_maker') . '"  />';
+    drupal_add_css(drupal_get_path('module', 'form_maker') . '/js/form_maker_cal.css');
+    drupal_add_js(drupal_get_path('module', 'form_maker') . '/js/formmaker.js');
+    drupal_add_js(drupal_get_path('module', 'form_maker') . '/js/form_maker_cal.js');
+    drupal_add_js(drupal_get_path('module', 'form_maker') . '/js/form_maker_onload.js');
+    drupal_add_js('form_maker_start();', array('type' => 'inline', 'scope' => 'footer'));
+
+    $fc_frontend .= '<form name="form" action=' . request_uri() . ' method="post" id="form" enctype="multipart/form-data" onKeyPress="swallowEnter(event)">
+              <input type="hidden" id="counter" value=' . $row->counter . ' name="counter" />';
+    $rep1 = array(
+      "<!--repstart-->Title<!--repend-->",
+      "<!--repstart-->First<!--repend-->",
+      "<!--repstart-->Last<!--repend-->",
+      "<!--repstart-->Middle<!--repend-->",
+      "<!--repstart-->January<!--repend-->",
+      "<!--repstart-->February<!--repend-->",
+      "<!--repstart-->March<!--repend-->",
+      "<!--repstart-->April<!--repend-->",
+      "<!--repstart-->May<!--repend-->",
+      "<!--repstart-->June<!--repend-->",
+      "<!--repstart-->July<!--repend-->",
+      "<!--repstart-->August<!--repend-->",
+      "<!--repstart-->September<!--repend-->",
+      "<!--repstart-->October<!--repend-->",
+      "<!--repstart-->November<!--repend-->",
+      "<!--repstart-->December<!--repend-->",
+      $captcha_url,
+      'class="captcha_img"',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/refresh.png',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/delete_el.png',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/up.png',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/down.png',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/left.png',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/right.png',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/edit.png',
+    );
+    $rep2 = array(
+      addslashes("Title"),
+      addslashes("First"),
+      addslashes("Last"),
+      addslashes("Middle"),
+      addslashes("January"),
+      addslashes("February"),
+      addslashes("March"),
+      addslashes("April"),
+      addslashes("May"),
+      addslashes("June"),
+      addslashes("July"),
+      addslashes("August"),
+      addslashes("September"),
+      addslashes("October"),
+      addslashes("November"),
+      addslashes("December"),
+      $captcha_rep_url,
+      'class="captcha_img" ',
+      '' . base_path() . drupal_get_path('module', 'form_maker') . '/images/refresh.png',
+      '', '', '', '', '', '',
+    );
+    $untilupload = str_replace($rep1, $rep2, $row->form);
+    while (strpos($untilupload, "***destinationskizb") > 0) {
+      $pos1 = strpos($untilupload, "***destinationskizb");
+      $pos2 = strpos($untilupload, "***destinationverj");
+      $untilupload = str_replace(substr($untilupload, $pos1, $pos2 - $pos1 + 22), "", $untilupload);
+    }
+    $fc_frontend .= $untilupload;
+    drupal_add_js(array('form_maker' => array('counter' => $row->counter)), 'setting');
+    drupal_add_js('var formOldFunctionOnLoad = null;formLoadBody();', array('type' => 'inline', 'scope' => 'footer'));
+
+    if (isset($_POST["captcha_input"])) {
+      $captcha_input = check_plain($_POST["captcha_input"]);
+    }
+
+    if (isset($_POST["counter"])) {
+      $counter = check_plain($_POST["counter"]);
+    }
+    if (isset($counter)) {
+      if (isset($captcha_input) or is_numeric($ok)) {
+        $session_wd_captcha_code = isset($sescaptcha) ? $sescaptcha : '-';
+        if ($captcha_input != $session_wd_captcha_code or is_numeric($ok)) {
+          for ($i = 0; $i < $counter; $i++) {
+            if (isset($_POST[$i . "_type"])) {
+              $type = check_plain($_POST[$i . "_type"]);
+            }
+            if (isset($_POST[$i . "_type"])) {
+              switch ($type) {
+                case "type_text":
+                case "type_submitter_mail":{
+                  drupal_add_js('if(document.getElementById("' . $i . '_element' . '").title!="' . addslashes(check_plain($_POST[$i . '_element'])) . '") {
+                  document.getElementById("' . $i . '_element' . '").value="' . addslashes(check_plain($_POST[$i . '_element'])) . '";
+                  document.getElementById("' . $i . '_element' . '").style.color="#000000";
+                  document.getElementById("' . $i . '_element' . '").style.fontStyle="normal !important";}', array('type' => 'inline',  'scope' => 'footer'));
+                  break;
+
+                  }
+                case "type_textarea":{
+                  drupal_add_js('if(document.getElementById("' . $i . '_element' . '").title!="' . addslashes(check_plain($_POST[$i . '_element'])) . '") {
+                  document.getElementById("' . $i . '_element' . '").innerHTML="' . addslashes(check_plain($_POST[$i . "_element"])) . '";
+                  document.getElementById("' . $i . '_element' . '").style.color="#000000";
+                  document.getElementById("' . $i . '_element' . '").style.fontStyle="normal";}', array('type' => 'inline',  'scope' => 'footer'));
+                  break;
+
+                  }
+                case "type_password":{
+                  drupal_add_js('document.getElementById("' . $i . '_element' . '").value="";', array('type' => 'inline', 'scope' => 'footer'));
+                  break;
+                  }
+                case "type_name":{
+                  if (isset($_POST[$i . "_element_title"])) {
+                    drupal_add_js('document.getElementById("' . $i . '_element_title' . '").value="' . addslashes(check_plain($_POST[$i . '_element_title'])) . '";
+                    document.getElementById("' . $i . '_element_first' . '").value="' . addslashes(check_plain($_POST[$i . '_element_first'])) . '";
+                    document.getElementById("' . $i . '_element_last' . '").value="' . addslashes(check_plain($_POST[$i . '_element_last'])) . '";
+                    document.getElementById("' . $i . '_element_middle' . '").value="' . addslashes(check_plain($_POST[$i . '_element_middle'])) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  }
+                  else {
+                    drupal_add_js('document.getElementById("' . $i . '_element_first' . '").value="' . addslashes(check_plain($_POST[$i . '_element_first'])) . '";
+                    document.getElementById("' . $i . '_element_last' . '").value="' . addslashes(check_plain($_POST[$i . '_element_last'])) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  }
+                  break;
+
+                  }
+                case "type_checkbox":{
+                  drupal_add_js('for(k=0; k<20; k++)
+                  if(document.getElementById("' . $i . '_element"+k))
+                  document.getElementById("' . $i . '_element"+k).removeAttribute("checked");
+                  else break;', array('type' => 'inline'));
+                  for ($j = 0; $j < 100; $j++) {
+                    if (isset($_POST[$i . '_element' . $j])) {
+                      drupal_add_js('document.getElementById("' . $i . '_element' . $j . '").setAttribute("checked", "checked");', array('type' => 'inline', 'scope' => 'footer'));
+                    }
+                  }
+                  break;
+
+                  }
+                case "type_radio":{
+                  drupal_add_js('for(k=0; k<100; k++)
+                  if(document.getElementById("' . $i . '_element"+k))	{
+                  document.getElementById("' . $i . '_element"+k).removeAttribute("checked");
+                  if(document.getElementById("' . $i . '_element"+k).value=="' . addslashes(check_plain($_POST[$i . '_element'])) . '")
+                  document.getElementById("' . $i . '_element"+k).setAttribute("checked", "checked");
+                }
+                else
+                break;', array('type' => 'inline', 'scope' => 'footer'));
+                  break;
+
+                  }
+                case "type_time":{
+                  if (isset($_POST[$i . '_ss'])) {
+                    drupal_add_js('document.getElementById("' . $i . '_hh' . '").value="' . check_plain($_POST[$i . '_hh']) . '";
+                    document.getElementById("' . $i . '_mm' . '").value="' . check_plain($_POST[$i . '_mm']) . '";
+                    document.getElementById("' . $i . '_ss' . '").value="' . check_plain($_POST[$i . '_ss']) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  }
+                  else {
+                    drupal_add_js('document.getElementById("' . $i . '_hh' . '").value="' . check_plain($_POST[$i . '_hh']) . '";
+                    document.getElementById("' . $i . '_mm' . '").value="' . check_plain($_POST[$i . '_mm']) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  }
+                  if (isset($_POST[$i . '_am_pm'])) {
+                    drupal_add_js('document.getElementById("' . $i . '_am_pm").value="' . check_plain($_POST[$i . '_am_pm']) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  }
+                  break;
+
+                  }
+                case "type_date":{
+                  drupal_add_js('document.getElementById("' . $i . '_element' . '").value="' . check_plain($_POST[$i . '_element']) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  break;
+
+                  }
+                case "type_date_fields":{
+                  $date_fields = explode('-', check_plain($_POST[$i . '_element']));
+                  drupal_add_js('document.getElementById("' . $i . '_day' . '").value="' . $date_fields[0] . '";
+                  document.getElementById("' . $i . '_month' . '").value="' . $date_fields[1] . '";
+                  document.getElementById("' . $i . '_year' . '").value="' . $date_fields[2] . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  break;
+
+                  }
+                case "type_country":{
+                  drupal_add_js('document.getElementById("' . $i . '_element").value="' . addslashes(check_plain($_POST[$i . '_element'])) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  break;
+
+                  }
+                case "type_own_select":{
+                  drupal_add_js('document.getElementById("' . $i . '_element").value="' . addslashes(check_plain($_POST[$i . "_element"])) . '";', array('type' => 'inline', 'scope' => 'footer'));
+                  }
+                case "type_file":{
+                  break;
+                  }
+              }
+            }
+          }
+        }
+      }
+    }
+    drupal_add_js('form_maker_gettype();', array('type' => 'inline', 'scope' => 'footer'));
+    $fc_frontend .= '
+    </form>';
+    unset($node->content['comments']);
+  }
+  else {
+    $fc_frontend = '';
+  }
+  $node->content['form_maker'] = array(
+    '#node' => $node,
+    '#teaser' => $teaser,
+    '#page' => $page,
+    '#markup' => $fc_frontend,
+    '#enabled' => TRUE,
+    '#weight' => 10,
+  );
+}
+
+/**
+ * Implements hook_node_info().
+ */
+function form_maker_node_info() {
+  return array(
+    'form_maker' => array(
+      'name' => t('Form'),
+      'base' => 'form_maker',
+      'module' => 'form_maker',
+      'description' => t("Create a new form with Form maker module"),
+    )
+  );
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function form_maker_node_insert($node) {
+  if ($node->type != 'form_maker') {
+    return;
+  }
+  $type = 3;
+  $title = 4;
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $nodeid = arg(1);
+  }
+  // If node doesn't exist.
+  $first_css = "
+      .form_view, .form_view table
+      {
+      width:inherit !important;
+      -webkit-border-horizontal-spacing: 0px;
+      -webkit-border-vertical-spacing: 0px;
+      border-bottom-color: gray;
+      border:0px  !important;
+      border-bottom-width: 0px;
+      border-collapse: separate;
+      border-left-color: gray;
+      border-left-width: 0px;
+      border-right-color: gray;
+      border-right-width: 0px;
+      border-top-color: gray;
+      border-top-width: 0px;
+      color: black;
+      display: table;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 14px !important;
+      font-weight: normal;
+      height: inherit !important;
+      line-height: 15px;
+      margin-bottom: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+      margin-top: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+      padding-top: 0px;
+      text-align: left !important;
+    
+    }
+    
+    .form_view, .form_view tr
+    {
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    border:0px  !important;
+    border-bottom-color: gray;
+    border-collapse: separate;
+    border-left-color: gray;
+    border-right-color: gray;
+    border-top-color: gray;
+    color: black;
+    display: table-row;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height: inherit !important;
+    line-height: 15px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    text-align: left;
+    vertical-align: middle;
+    width:inherit !important;
+    }
+    
+    .form_view, .form_view td
+    {
+    -webkit-border-horizontal-spacing: 2px;
+    -webkit-border-vertical-spacing: 2px;
+    border-bottom-color: black;
+    border-collapse: separate;
+    border-left-color: black;
+    border-right-color: black;
+    border-top-color: black;
+    border:0px !important;
+    color: black;
+    display: table-cell;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height:inherit !important;
+    line-height: 15px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 1px !important;
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+    padding-top: 3px !important;
+    text-align: left !important;
+    width:inherit !important;
+    vertical-align:top;
+    }
+    .form_view, .form_view tr
+    {
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    border:0px  !important;
+    border-bottom-color: gray;
+    border-collapse: separate;
+    border-left-color: gray;
+    border-right-color: gray;
+    border-top-color: gray;
+    color: black;
+    display: table-row;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height: inherit !important;
+    line-height: 15px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    text-align: left;
+    vertical-align: middle;
+    width:inherit !important;
+    }
+    
+    .form_view, .form_view input,  .form_view  textarea
+    {
+    line-height:inherit  !important;
+    margin:0px !important;
+    min-height: 18px !important;
+    font-size: 14px !important;
+    }
+    .form_view, .form_view select
+    {
+    margin:0px !important;
+    font-size: 14px !important;
+    }
+    .form_view, .form_view label
+    {
+    font-size: 14px;
+    vertical-align:inherit !important;
+    }
+    .time_box
+    {
+    border-width:1px;
+    margin: 0px;
+    padding: 0px;
+    text-align:right;
+    width:30px;
+    vertical-align:middle
+    }
+    
+    
+    .mini_label
+    {
+    color: #000 !important;
+    font-size:14px;
+    font-family: Lucida Grande, Tahoma, Arial, Verdana, sans-serif;
+    }
+    
+    .ch_rad_label
+    {
+    color:#000 !important;
+    display:inline;
+    margin-left:5px;
+    margin-right:15px;
+    float:none;
+    }
+    
+    .label
+    {
+    -webkit-border-horizontal-spacing: 2px;
+    -webkit-border-vertical-spacing: 2px;
+    border-bottom-color: black;
+    border-bottom-style: none;
+    border-collapse: separate;
+    border-left-color: black;
+    border-left-style: none;
+    border-right-color: black;
+    border-right-style: none;
+    border-top-color: black;
+    border-top-style: none;
+    color: black;
+    display: inline;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height: auto;
+    line-height: 15px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    text-align: -webkit-left;
+    width: auto;
+    }
+    
+    
+    .td_am_pm_select
+    {
+    padding-left:5;
+    }
+    
+    .am_pm_select
+    {
+    height: 16px;
+    margin:0;
+    padding:0
+    }
+    
+    .input_deactive
+    {
+    background-color: #FFFFFF;
+    border-bottom-style: inset;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-left-color: #EEE;
+    border-left-style: inset;
+    border-left-width: 1px;
+    border-right-color: #EEE;
+    border-right-style: inset;
+    border-right-width: 1px;
+    border-top-color: #EEE;
+    border-top-style: inset;
+    border-top-width: 1px;
+    font-style: italic;
+    color: #999;
+    cursor: auto;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 14px !important;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    text-align: -webkit-auto;
+    text-indent: 0px;
+    text-shadow: none;
+    text-transform: none;
+    word-spacing: 0px;
+    }
+    
+    .input_active
+    {
+    background-color: #FFFFFF;
+    -webkit-appearance: none;
+    -webkit-border-horizontal-spacing: 2px;
+    -webkit-border-vertical-spacing: 2px;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    background-color: white;
+    border-bottom-color: #EEE;
+    border-bottom-style: inset;
+    border-bottom-width: 1px;
+    border-collapse: separate;
+    border-left-color: #EEE;
+    border-left-style: inset;
+    border-left-width: 1px;
+    border-right-color: #EEE;
+    border-right-style: inset;
+    border-right-width: 1px;
+    border-top-color: #EEE;
+    border-top-style: inset;
+    border-top-width: 1px;
+    color: black;
+    cursor: auto;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 14px !important;
+    font-style: normal;
+    font-weight: normal;
+    height: 16px;
+    letter-spacing: normal;
+    line-height: normal;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    text-align: -webkit-auto;
+    text-indent: 0px;
+    text-shadow: none;
+    text-transform: none;
+    width: 200px;
+    word-spacing: 0px;
+    }
+    
+    .required
+    {
+    border:none;
+    color:red
+    }
+    
+    .captcha_img
+    {
+    border-width:0px;
+    margin: 0px;
+    padding: 0px;
+    cursor:pointer;
+    
+    
+    }
+    
+    .captcha_refresh
+    {
+    width:18px;
+    border-width:0px;
+    margin: 0px;
+    padding: 0px;
+    vertical-align:middle;
+    cursor:pointer;
+    }
+    
+    .captcha_input
+    {
+    height:20px;
+    border-width:1px;
+    margin: 0px;
+    padding: 0px;
+    vertical-align:middle;
+    }
+    
+    .file_upload
+    {
+    -webkit-appearance: none;
+    -webkit-border-horizontal-spacing: 2px;
+    -webkit-border-vertical-spacing: 2px;
+    -webkit-box-align: baseline;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    background-color: transparent;
+    border-bottom-color: black;
+    border-bottom-style: none;
+    border-bottom-width: 0px;
+    border-collapse: separate;
+    border-left-color: black;
+    border-left-style: none;
+    border-left-width: 0px;
+    border-right-color: black;
+    border-right-style: none;
+    border-right-width: 0px;
+    border-top-color: black;
+    border-top-style: none;
+    border-top-width: 0px;
+    color: black;
+    cursor: auto;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: normal;
+    height: 22px;
+    letter-spacing: normal;
+    line-height: normal;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    text-align: start;
+    text-indent: 0px;
+    text-shadow: none;
+    text-transform: none;
+    width: 238px;
+    word-spacing: 0px;
+    }
+    .captcha_table , .captcha_table input
+    {
+    font-size: 15px !important;
+    }";
+  db_insert('form_maker_table')
+  ->fields(array(
+    'vid' => $node->nid,
+    'type' => $type,
+    'title' => $title,
+    'mail' => '',
+    'form' => '',
+    'css' => '',
+    'javascript' => '',
+    'script1' => '',
+    'script2' => '',
+    'data' => '',
+    'counter' => '0',
+    'article_id' => '0',
+    'label_order' => '',
+    'redirect_url' => '',
+    ))
+  ->execute();
+  db_query("UPDATE {form_maker_table} SET css= :css WHERE vid = :vid", array(':css' => $first_css, ':vid' => $node->nid));
+  db_query("UPDATE {node_revision} SET comment=:comment WHERE nid=:nid", array(':comment' => 0, ':nid' => $node->nid));
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function form_maker_node_delete($node) {
+  // Notice that we're matching all revision, by using the node's nid.
+  db_query("DELETE FROM {form_maker_table} WHERE vid= :vid", array(':vid' => $node->nid));
+  if (!in_array($node->type, form_maker_variable_get('form_maker_node_types'))) {
+    return;
+  }
+}
+
+/**
+ * Menu loader callback. Load a Form Maker settings.
+ */
+function form_maker_page() {
+  require_once "form_maker_functions.php";
+  $result = '';
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $nodeid = arg(1);
+  }
+  $nodetitle = db_query("SELECT title FROM {node} WHERE nid = " . $nodeid)->fetchField();
+  db_query("UPDATE {form_maker_table} SET title= :title, type= :type WHERE vid = :vid", array(
+    ':title' => $nodetitle,
+    ':type' => 'form_maker',
+    ':vid' => $nodeid,
+    ));
+  $id = db_query("SELECT id FROM {form_maker_table} WHERE vid = :vid", array(':vid' => $nodeid))->fetchField();
+  $form = array();
+  if (isset($_GET["task"])) {
+    $task = $_GET["task"];
+  }
+  else {
+    $task = "edit_form";
+  }
+
+  switch ($task) {
+    case 'Edit_CSS':
+      form_maker_save();
+      $result .= form_maker_edit_css($id);
+      $form['#id'] = 'edit_css';
+      $form['#attributes'] = array('name' => 'edit_css');
+      break;
+
+    case 'Edit_JavaScript':
+      form_maker_save();
+      $result .= form_maker_Edit_JavaScript($id);
+      $form['#id'] = 'edit_js';
+      $form['#attributes'] = array('name' => 'edit_js');
+      break;
+
+    case 'Custom_text_in_email':
+      form_maker_save();
+      $string_textinemail = url('node/' . $nodeid . '/form_maker', array('query' => array('task' => 'Custom_text_in_email', 'id' => ''), 'absolute' => FALSE));
+      $result .= form_maker_text_in_email($id);
+      $form['#action'] = $string_textinemail . $id;
+      $form['#id'] = 'all_Form_Maker';
+      $form['#attributes'] = array('name' => 'all_Form_Maker');
+      break;
+
+    case 'delete':
+      $result .= form_maker_form_delete($id);
+      break;
+
+    case 'edit_form':
+      $form['#id'] = 'all_Form_Maker';
+      $form['#attributes'] = array('name' => 'all_Form_Maker');
+      $result .= form_maker_edit($id);
+      break;
+
+    case 'gotoedit':
+      $form['#id'] = 'all_Form_Maker';
+      $form['#attributes'] = array('name' => 'all_Form_Maker');
+      drupal_set_message(t('Item Saved'), 'status', FALSE);
+      $result .= form_maker_edit($id);
+      break;
+
+    case 'Save':
+      $result .= form_maker_save();
+      $result .= form_maker_forchrome($id);
+      $form['#id'] = 'adminForm';
+      $form['#attributes'] = array('name' => 'adminForm');
+      $result .= form_maker_edit($id);
+      break;
+
+    case 'Apply_edit_css':
+      $result .= form_maker_save_edit_css($id);
+      $result .= form_maker_edit_css($id);
+      $form['#id'] = 'edit_css';
+      $form['#attributes'] = array('name' => 'edit_css');
+      break;
+
+    case 'Apply_edit_JavaScript':
+      $result .= form_maker_save_javascript($id);
+      $result .= form_maker_Edit_JavaScript($id);
+      $form['#id'] = 'edit_js';
+      $form['#attributes'] = array('name' => 'edit_js');
+      break;
+
+    case 'Apply_mail':
+      $result .= form_maker_save();
+      break;
+
+    case 'Save_edit_css':
+      $result .= form_maker_save_edit_css($id);
+      $result .= form_maker_edit($id);
+      $form['#id'] = 'all_Form_Maker';
+      $form['#attributes'] = array('name' => 'all_Form_Maker');
+      break;
+
+    case 'Save_edit_JavaScript':
+      $result .= form_maker_save_javascript($id);
+      $result .= form_maker_edit($id);
+      $form['#id'] = 'all_Form_Maker';
+      $form['#attributes'] = array('name' => 'all_Form_Maker');
+      break;
+
+    case 'Apply':
+      $result .= form_maker_apply($id);
+      $result .= form_maker_forchrome($id);
+      break;
+
+    case 'custom_text_Save':
+      $result .= form_maker_update_custom_text($id);
+      $result .= form_maker_edit($id);
+      $form['#id'] = 'all_Form_Maker';
+      $form['#attributes'] = array('name' => 'all_Form_Maker');
+      break;
+
+    case 'Custom_text_apply':
+      $string_textinemail = url('node/' . $nodeid . '/form_maker', array('query' => array('task' => 'Custom_text_in_email', 'id' => ''), 'absolute' => FALSE));
+      $result .= form_maker_update_custom_text($id);
+      $result .= form_maker_text_in_email($id);
+      $form['#action'] = $string_textinemail . $id;
+      $form['#id'] = 'all_Form_Maker';
+      $form['#attributes'] = array('name' => 'all_Form_Maker');
+      break;
+  }
+  $form['result'] = array(
+    '#type' => 'fieldset',
+    '#value' => $result,
+  );
+  return $form;
+}
+
+/**
+ * Menu callback. Load Submissions.
+ */
+function form_maker_submissions() {
+  require_once "form_maker_functions.php";
+  $sql_ascdesc = '';
+  $sql_order = '';
+  $sql_order_param = array();
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+    $nodeid = arg(1);
+  }
+  $id = db_query("SELECT id FROM {form_maker_table} WHERE vid= :vid", array(':vid' => $nodeid))->fetchField();
+  $submits = '';
+  form_maker_delete_submishions();
+  if (isset($_GET["task"])) {
+    $task = $_GET["task"];
+    switch ($task) {
+      case 'edit_submit':
+        $edit_submit = form_maker_Edit_Submission($id);
+        return $edit_submit;
+        break;
+
+      case 'Save_Edit_Submission':
+        $submits .= form_maker_Save_Edit_Submission($id);
+        break;
+    }
+  }
+  $string_submission = url('node/' . $nodeid . '/submissions', array('query' => array('id' => ''), 'absolute' => FALSE));
+  drupal_add_js(drupal_get_path('module', 'form_maker') . '/js/form_maker_cal.js');
+  drupal_add_css(drupal_get_path('module', 'form_maker') . '/js/form_maker_cal.css');
+  drupal_add_js(drupal_get_path('module', 'form_maker') . '/js/form_maker_submissions.js');
+  $submits .= '
+    <table width="95%" rules="none" style="border:none;">
+			<tr>	
+				<td style="width: 100%; text-align:right;font-size:16px; padding:20px; padding-right:50px; right:0; border:none;">
+					<a href="http://web-dorado.com/products/drupal-form-builder.html" target="_blank" style="color:red; text-decoration:none;">
+						<img src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/header.png" border="0" alt="www.web-dorado.com" width="215"><br>
+					Get the full version&nbsp;&nbsp;&nbsp;&nbsp;
+					</a>
+				</td>
+			</tr>
+		</table>
+		<table width="95%" rules="none" style="border:none;">
+			<tr>
+				<td style="width:170px;">
+    				<h2>' . t('Submissions') . '</h2>
+    			</td>
+				<td width="95%"></td>
+				<td>
+					<input title="Edit selected submission" type="button" onclick=\'javascript:if (document.main_show_form.boxchecked.value==0){alert(Drupal.t("Please first make a selection from the list"));}else{ submitbutton("edit_submit")}\' value="' . t('Edit') . '" class="form-submit" />
+				</td>
+				<td style="border:none;">
+					<input title="Delete selected submission" type="button" onclick=\'javascript:if (document.main_show_form.boxchecked.value==0){alert(Drupal.t("Please first make a selection from the list"));}else{ submit1()}\' value="' . t('Delete') . '" class="form-submit" />
+				</td>  
+			</tr>
+		</table>
+		<table width="95%" rules="none" style="border:none;">
+			<tr>
+				<td width="70%"></td>
+				<td style="text-align:right;">' . t('Export to') . '</td>
+				<td style="text-align:right;" >
+				    <input type="button" value="CSV" onclick=\'alert(Drupal.t("This functionality is disabled in free version. If you need this functionality, you need to buy the commercial version."))\' class="form-submit">&nbsp;
+				</td>
+				<td style="text-align:right; border:none;">
+				    <input type="button" value="XML" onclick=\'alert(Drupal.t("This functionality is disabled in free version. If you need this functionality, you need to buy the commercial version."))\' class="form-submit">
+				</td>
+			</tr>
+		</table>
+		<table width="95%" rules="none" style="border:none;">
+			<tr>
+				<td width="90%"></td>
+				<td align="right" style="border:none;"><input type="button" onclick="toggleChBDiv(true)" value="' . t('Add/Remove Columns') . '" class="form-submit"></td>
+			</tr>
+		</table>';
+
+  $sql_text = "";
+  if (isset($_POST['serch_or_not'])) {
+    if (check_plain($_POST['serch_or_not']) == "search") {
+      if (check_plain($_POST["startdate"]) && check_plain($_POST["enddate"])) {
+        $sql_text = " WHERE form_id= :form_id AND date >= :start_date AND date <= :end_date";
+        $sql_param = array(
+          ':form_id' => $id,
+          ':start_date' => check_plain($_POST["startdate"]) . " 00:00:00",
+          ':end_date' => check_plain($_POST["enddate"]) . " 23:59:59");
+      }
+      else {
+        if (check_plain($_POST["startdate"]) && !check_plain($_POST["enddate"])) {
+          $sql_text = " WHERE form_id= :form_id AND date >= :start_date";
+          $sql_param = array(
+            ':form_id' => $id,
+            ':start_date' => check_plain($_POST["startdate"]) . " 00:00:00");
+        }
+        else {
+          if (!check_plain($_POST["startdate"]) && check_plain($_POST["enddate"])) {
+            $sql_text = " WHERE form_id= :form_id AND date <= :end_date";
+            $sql_param = array(
+              ':form_id' => $id,
+              ':end_date' => check_plain($_POST["enddate"]) . " 23:59:59");
+          }
+          else {
+            $sql_text = " WHERE form_id= :form_id";
+            $sql_param = array(':form_id' => $id);
+          }
+        }
+      }
+    }
+    else {
+      $sql_text = " WHERE form_id= :form_id";
+      $sql_param = array(':form_id' => $id);
+    }
+  }
+  else {
+    $sql_text = " WHERE form_id= :form_id";
+    $sql_param = array(':form_id' => $id);
+  }
+  // Counts elements into Form_submishions.
+  $i = 0;
+  $ids_form_grup_id = db_query("SELECT group_id FROM {form_maker_submits_table}" . $sql_text . " group by group_id", $sql_param)->fetchCol();
+  $is = $id;
+  foreach ($ids_form_grup_id as $is) {
+    $i = $i + 1;
+  }
+  if ($i % 20 > 0) {
+    $pages_count = ($i - $i % 20) / 20 + 1;
+  }
+  else {
+    $pages_count = $i / 20;
+  }
+  $enable_disable_for_next_page = '';
+  $page_number = '';
+  if (isset($_POST['page_number'])) {
+    if (check_plain($_POST['page_left_or_right']) == -2) {
+      $page_number = 1;
+    }
+    if (check_plain($_POST['page_left_or_right']) == -1) {
+      if (check_plain($_POST['page_number']) > 1) {
+        $page_number = check_plain($_POST['page_number']) - 1;
+      }
+    }
+    if (check_plain($_POST['page_left_or_right']) == 1) {
+      if (check_plain($_POST['page_number']) < $pages_count) {
+        $page_number = check_plain($_POST['page_number']) + 1;
+      }
+      else {
+        $page_number = check_plain($_POST['page_number']);
+      }
+    }
+    if (check_plain($_POST['page_left_or_right']) == 2) {
+      $page_number = $pages_count;
+    }
+    if ($page_number <= 0) {
+      $page_number = 1;
+    }
+    if ($page_number == ($i - $i % 20) / 20 + 1 && $i > 20) {
+      $enable_disable_for_next_page = 'disabled';
+    }
+    else {
+      $enable_disable_for_next_page = '';
+    }
+    if ($page_number == '1') {
+      $enble_disable = 'disabled';
+    }
+    else {
+      $enble_disable = '';
+    }
+  }
+  else {
+    $page_number = 1;
+    $enble_disable = 'disabled';
+  }
+  $first_page = 'first-page ' . $enble_disable;
+  $prev_page = 'prev-page ' . $enble_disable;
+  $next_page = 'next-page ' . $enable_disable_for_next_page;
+  $last_page = 'last-page ' . $enable_disable_for_next_page;
+  $string_form_submission = url('node/' . $nodeid . '/submissions', array('query' => array('id' => ''), 'absolute' => FALSE));
+  drupal_add_js(array(
+    'folder_menu' => array(
+      'string_form_submission' => $string_form_submission,
+    ),
+    ),
+    'setting');
+  $submits .= '
+				<div class="tablenav top" style="width:95%">
+						<div class="alignleft actions" >
+							' . t('From:') . '
+							<input class="form-text" type="text" name="startdate" id="startdate" size="10" maxlength="10" value="';
+  if (isset($_POST['startdate'])) {
+    $submits .= check_plain($_POST['startdate']);
+  }
+  $submits .= '">
+							<input type="reset" class="form-submit" value="..." onclick=\'return showCalendar("startdate","%Y-%m-%d");\'>
+							' . t('To:') . '
+							<input class="form-text" type="text" name="enddate" id="enddate" size="10" maxlength="10" value="';
+  if (isset($_POST['enddate'])) {
+    $submits .= check_plain($_POST['enddate']);
+  }
+  $string_submission_reset = url('node/' . $nodeid . '/submissions', array('query' => array('id' => ''), 'absolute' => FALSE));
+  $submits .= '">
+							<input type="reset" class="form-submit" value="..." onclick=\'return showCalendar("enddate","%Y-%m-%d");\'>
+							<input type="button" value="' . t('Search') . '" onclick=\'document.getElementById("page_number").value="1";document.getElementById("serch_or_not").value="search"; document.getElementById("main_show_form").submit();\' class="form-submit" />
+							<input type="button" value="' . t('Reset') . '" onclick=\'window.location.href="' . $string_submission_reset . $id . '"\' class="form-submit" />
+						</div>
+						<br />
+						<div class="tablenav-pages">
+							<span class="displaying-num">' . $i . t(' items') . '</span>';
+  if ($i > 20) {
+    $submits .= '
+								<span class="pagination-links">
+									<a class="' . $first_page . '" title="Go to the first page" href="javascript:submit_href(' . $page_number . ',-2);">«</a>
+									<a class="' . $prev_page . '" title="Go to the previous page" href="javascript:submit_href(' . $page_number . ',-1);">‹</a>
+									<span class="paging-input">
+										<span class="total-pages">' . $page_number . '</span>
+										of 
+										<span class="total-pages">';
+    $submits .= ($i - $i % 20) / 20 + 1;
+    $submits .= '</span>
+									</span>
+									<a class="' . $next_page . '" title="Go to the next page" href="javascript:submit_href(' . $page_number . ',1);">›</a>
+									<a class="' . $last_page . '" title="Go to the last page" href="javascript:submit_href(' . $page_number . ',2);">»</a>';
+  }
+  $submits .= '
+								</span>';
+  $submits .= '
+						</div>
+					</div>';
+
+  if (isset($_POST['asc_or_desc_by'])) {
+    $sql_ascdesc = '';
+    if (check_plain($_POST['asc_or_desc_by']) == 'id') {
+      if (check_plain($_POST['asc_or_desc']) == 1) {
+        $sql_ascdesc = ' ORDER BY group_id ASC';
+        $style_class_title = "manage-column column-title sortable desc";
+        $style_class_id = "manage-column column-autor sorted asc";
+        $style_class_email = "manage-column column-autor sortable desc";
+        $sort_title = 1;
+        $sort_id = 2;
+        $sort_email = 1;
+      }
+      if (check_plain($_POST['asc_or_desc']) == 2) {
+        $sql_ascdesc = ' ORDER BY group_id DESC';
+        $style_class_title = "manage-column column-title sortable desc";
+        $style_class_id = "manage-column column-autor sorted desc";
+        $style_class_email = "manage-column column-autor sortable desc";
+        $sort_title = 1;
+        $sort_id = 1;
+        $sort_email = 1;
+      }
+    }
+    if (check_plain($_POST['asc_or_desc_by']) == 'date') {
+      if (check_plain($_POST['asc_or_desc']) == 1) {
+        $sql_ascdesc = ' ORDER BY date ASC';
+        $style_class_title = "manage-column column-title sorted asc";
+        $style_class_id = "manage-column column-autor sortable desc";
+        $style_class_email = "manage-column column-autor sortable desc";
+        $sort_title = 2;
+        $sort_id = 1;
+        $sort_email = 1;
+      }
+      if (check_plain($_POST['asc_or_desc']) == 2) {
+        $sql_ascdesc = ' ORDER BY date DESC';
+        $style_class_title = "manage-column column-title sorted desc";
+        $style_class_id = "manage-column column-autor sortable desc";
+        $style_class_email = "manage-column column-autor sortable desc";
+        $sort_title = 1;
+        $sort_id = 1;
+        $sort_email = 1;
+      }
+    }
+    if (check_plain($_POST['asc_or_desc_by']) == 'ip') {
+      if (check_plain($_POST['asc_or_desc']) == 1) {
+        $sql_ascdesc = ' ORDER BY ip ASC';
+        $style_class_title = "manage-column column-title sortable desc";
+        $style_class_id = "manage-column column-autor sortable desc";
+        $style_class_email = "manage-column column-autor sorted asc";
+        $sort_title = 1;
+        $sort_id = 1;
+        $sort_email = 2;
+      }
+      if (check_plain($_POST['asc_or_desc']) == 2) {
+        $sql_ascdesc = ' ORDER BY ip DESC';
+        $style_class_title = "manage-column column-title sortable desc";
+        $style_class_id = "manage-column column-autor sortable desc";
+        $style_class_email = "manage-column column-autor sorted desc";
+        $sort_title = 1;
+        $sort_id = 1;
+        $sort_email = 1;
+      }
+    }
+    if (!(check_plain($_POST['asc_or_desc_by']) == 'id' || check_plain($_POST['asc_or_desc_by']) == 'date' || check_plain($_POST['asc_or_desc_by']) == 'ip')) {
+      $style_class_title = "manage-column column-title sortable desc";
+      $style_class_id = "manage-column column-autor sortable desc";
+      $style_class_email = "manage-column column-autor sortable desc";
+      $sort_title = 1;
+      $sort_id = 1;
+      $sort_email = 1;
+    }
+  }
+  else {
+    $style_class_title = "manage-column column-title sortable desc";
+    $style_class_id = "manage-column column-autor sortable desc";
+    $style_class_email = "manage-column column-autor sortable desc";
+    $sort_title = 1;
+    $sort_id = 1;
+    $sort_email = 1;
+  }
+  if (isset($_POST['serch_or_not'])) {
+    $search_or_not = check_plain($_POST['serch_or_not']);
+  }
+  else {
+    $search_or_not = '';
+  }
+  if (isset($_POST['asc_or_desc_by'])) {
+    $asc_or_desc_by = check_plain($_POST['asc_or_desc_by']);
+  }
+  else {
+    $asc_or_desc_by = '';
+  }
+  if (isset($_POST['asc_or_desc'])) {
+    $asc_or_desc = check_plain($_POST['asc_or_desc']);
+  }
+  else {
+    $asc_or_desc = '';
+  }
+  $submits .= '
+				<input type="hidden" name="serch_or_not" id="serch_or_not" value="' . $search_or_not . '" />';
+  $submits .= '
+				<input type="hidden" id="page_number" name="page_number" value="' . $page_number . '"/>
+				<input type="hidden" id="page_left_or_right" name="page_left_or_right" value=""/>
+				<input type="hidden" id="asc_or_desc_by" name="asc_or_desc_by" value="' . $asc_or_desc_by . '"/>
+				<input type="hidden" id="asc_or_desc" name="asc_or_desc" value="' . $asc_or_desc . '"/>
+				<input type="hidden" id="boxchecked" name="boxchecked" value="" />
+				<input type="hidden" id="delete" name="delete" value="0" />
+				<input type="hidden" id="idd" name="idd" value="0" />';
+  $limi[0] = ($page_number - 1) * 20;
+  $limi[1] = 20;
+  $limit = " LIMIT " . $limi[0] . "," . $limi[1];
+  $count_row_show = count($ids_form_grup_id);
+  $defult_class = "manage-column column-autor sortable desc";
+  $defult_orderr = 1;
+
+  if (isset($_POST['asc_or_desc_by']) && $sql_ascdesc == '') {
+    if (check_plain($_POST["asc_or_desc"]) == 1) {
+      $custom_orderr = 2;
+      $custom_style = "manage-column column-autor sorted asc";
+      $order = "DESC";
+    }
+    else {
+      $custom_orderr = 1;
+      $custom_style = "manage-column column-autor sorted desc";
+      $order = "ASC";
+    }
+    if (check_plain($_POST['asc_or_desc_by']) != "") {
+      $sql_order = " AND element_label= :element_label";
+      $sql_order_param = array(':element_label' => check_plain($_POST['asc_or_desc_by']));
+      $sql_ascdesc = " ORDER BY element_value " . $order;
+    }
+    else {
+      $sql_order = "";
+      $sql_order_param = array();
+    }
+  }
+  if ($sql_ascdesc == "") {
+    $sql_ascdesc = "ORDER BY group_id DESC";
+  }
+
+  $value = db_query("SELECT * FROM {form_maker_submits_table} WHERE form_id= :form_id", array(':form_id' => $id));
+
+  $rows = array();
+  while ($a = $value->fetchObject()) {
+    $rows[] = $a;
+  }
+  $n = count($rows);
+  $labels = array();
+  for ($i = 0; $i < $n; $i++) {
+    $row = &$rows[$i];
+    if (!in_array($row->element_label, $labels)) {
+      array_push($labels, $row->element_label);
+    }
+  }
+  $sorted_labels_id = array();
+  $sorted_labels = array();
+  $label_titles = array();
+  if ($labels) {
+    $label_id = array();
+    $label_order = array();
+    $label_order_original = array();
+    $label_type = array();
+
+    $value = db_query("SELECT * FROM {form_maker_table} WHERE id = :id", array(':id' => $id));
+    $this_form = $value->fetchObject();
+
+    $label_all = explode('#****#', $this_form->label_order);
+    $label_all = array_slice($label_all, 0, count($label_all) - 1);
+
+    foreach ($label_all as $key => $label_each) {
+
+      $label_id_each = explode('#**id**#', $label_each);
+
+      array_push($label_id, $label_id_each[0]);
+
+      $label_oder_each = explode('#**label**#', $label_id_each[1]);
+
+      array_push($label_order_original, $label_oder_each[0]);
+
+      $ptn = "/[^a-zA-Z0-9_]/";
+      $rpltxt = "";
+      $label_temp = preg_replace($ptn, $rpltxt, $label_oder_each[0]);
+
+      array_push($label_order, $label_temp);
+
+      array_push($label_type, $label_oder_each[1]);
+    }
+
+    foreach ($label_id as $key => $label) {
+      if (in_array($label, $labels)) {
+        array_push($sorted_labels, $label_order[$key]);
+        array_push($sorted_labels_id, $label);
+        array_push($label_titles, $label_order_original[$key]);
+      }
+    }
+    $i = 0;
+    foreach ($sorted_labels_id as $idd) {
+      $labelll[$idd] = $label_titles[$i];
+      $i++;
+    }
+  }
+
+  $labels_id = $sorted_labels_id;
+  $lists['hide_label_list'] = '';
+  if (isset($_POST["hide_label_list"])) {
+    $_SESSION['form_maker_hide_label_list' . $nodeid] = check_plain($_POST["hide_label_list"]);
+    $lists['hide_label_list'] = check_plain($_POST["hide_label_list"]);
+  }
+  if (isset($_SESSION['form_maker_hide_label_list' . $nodeid])) {
+    $form_maker_hide_label_list = $_SESSION['form_maker_hide_label_list' . $nodeid];
+    $lists['hide_label_list'] = $_SESSION['form_maker_hide_label_list' . $nodeid];
+  }
+  else {
+    $form_maker_hide_label_list = '';
+  }
+  if (isset($labels)) {
+    $templabels = array_merge(
+      array(
+        'submitid',
+        'submitdate',
+        'submitterip',
+      ),
+      $labels_id
+    );
+    $label_titles = array_merge(array(
+        'ID',
+        t('Submit date'),
+        t("Submitter's IP Address"),
+        ),
+        $label_titles
+      );
+  }
+  $string_submission_submitin = url('node/' . $nodeid . '/submissions', array('query' => array('task' => ''), 'absolute' => FALSE));
+  drupal_add_js(array(
+    'form_maker' => array(
+      'templabels' => implode($templabels, "@@"),
+      'string_submission_submitin' => $string_submission_submitin,
+    ),
+    ),
+    'setting'
+  );
+  $submits .= '			
+				<div id="sbox-overlay" style="z-index: 65555; position: fixed; top: 0px; left: 0px; visibility: visible; zoom: 1; background-color:#000000; opacity: 0.7; filter: alpha(opacity=70); display:none;" onclick=\'toggleChBDiv(false)\'></div>
+				<div style="background-color:#FFFFFF; width:250px; padding:20px;display:none; position:fixed; top:200px; border:2px solid #AAAAAA;  z-index:65556" id="ChBDiv">
+					<p style="font-weight:bold; font-size:18px;margin-top: 0px;">
+					' . t('Select Columns') . '
+					</p>
+					<input type="checkbox" ';
+  if ($lists['hide_label_list'] === '') {
+    $submits .= 'checked="checked"';
+  }
+  $submits .= 'onclick="clickLabChBAll(this)" id="ChBAll" />All</br>';
+
+  foreach ($templabels as $key => $curlabel) {
+    if (strpos($lists['hide_label_list'], '@' . $curlabel . '@') === FALSE) {
+      $submits .= '<input type="checkbox" checked="checked" onclick="clickLabChB(\'' . $curlabel . '\', this)" />' . $label_titles[$key] . '<br />';
+    }
+    else {
+      $submits .= '<input type="checkbox" onclick="clickLabChB(\'' . $curlabel . '\', this)" />' . $label_titles[$key] . '<br />';
+    }
+  }
+  $submits .= '
+					<br />
+					<div style="text-align:center;">
+						<input type="button" onclick="toggleChBDiv(false);" value="' . t('Done') . '" class="form-submit"/> 
+					</div>
+				</div>
+        <input type="hidden" id="hide_label_list" name="hide_label_list" value="' . $form_maker_hide_label_list . '" />';
+  $ids_form_grup_id = db_query("SELECT group_id FROM {form_maker_submits_table} " . $sql_text . $sql_order . " GROUP BY group_id " . $sql_ascdesc . " " . $limit . "", array_merge((array) $sql_param, (array) $sql_order_param))->fetchCol();
+
+  $ascdesc = '';
+  if (isset($_POST['asc_or_desc_by'])) {
+    $ascdesc = check_plain($_POST['asc_or_desc_by']);
+  }
+  $submits .= '
+				<div style="overflow:auto; max-width:1100px; width:100%">
+				<fieldset style="border:none;">
+				<table class="wp-list-table widefat fixed pages" style="width:95%; table-layout:inherit" bgcolor="#FFFFFF">
+					<thead>
+						<TR>
+							<th scope="col" class="' . $style_class_id . ' submitid_fc" style="width:50px" >
+								
+								<a title="Click to sort by this column" href=\'javascript:ordering("id",' . $sort_id . ')\'>
+									<span>Id</span>							
+									<span class="sorting-indicator"></span>
+								</a>';
+  if ($ascdesc == "id") {
+    if ($sort_id == 1) {
+      $submits .= '<img title="Sorted by descending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/desc.png"></img>';
+    }
+    else {
+      $submits .= '<img title="Sorted by ascending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/asc.png"></img>';
+    }
+  }
+  $submits .= '
+							</th>
+							<th style=" width:30px" >
+								<input type="checkbox" name="toggle" id="toggle" value="" onclick=\'checkAll(' . count($ids_form_grup_id) . ')\' style="margin:0px; padding:0px">
+							</th>
+							<th scope="col"  class="' . $style_class_title . ' submitdate_fc" style="" >
+								<a title="Click to sort by this column" href=\'javascript:ordering("date",' . $sort_title . ')\'>
+									<span>Submit date</span>	
+									<span class="sorting-indicator"></span>
+								</a>';
+  if ($ascdesc == "date") {
+    if ($sort_title == 1) {
+      $submits .= '<img title="Sorted by descending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/desc.png"></img>';
+    }
+    else {
+      $submits .= '<img title="Sorted by ascending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/asc.png"></img>';
+    }
+  }
+  $submits .= '
+							</th>
+							<th scope="col"  class="' . $style_class_email . ' submitterip_fc" style="" >
+								<a title="Click to sort by this column" href=\'javascript:ordering("ip",' . $sort_email . ')\'>
+									<span>Submitter\'s IP Address</span>
+									<span class="sorting-indicator"></span>
+								</a>';
+  if ($ascdesc == "ip") {
+    if ($sort_email == 1) {
+      $submits .= '<img title="Sorted by descending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/desc.png"></img>';
+    }
+    else {
+      $submits .= '<img title="Sorted by ascending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/asc.png"></img>';
+    }
+  }
+  $submits .= '
+							</th>';
+
+  $row_fields = db_query("SELECT element_label FROM {form_maker_submits_table} " . $sql_text . " group by element_label", $sql_param)->fetchCol();
+
+  if (isset($_POST['asc_or_desc_by'])) {
+    $asc_or_desc_by = check_plain($_POST['asc_or_desc_by']);
+  }
+  else {
+    $asc_or_desc_by = '';
+  }
+  foreach ($labels_id as $label_id) {
+    $submits .= '
+								<th scope="col"  class="';
+    if ($asc_or_desc_by == $label_id) {
+      $submits .= $custom_style . " " . $label_id . "_fc";
+    }
+    else {
+      $submits .= $defult_class . " " . $label_id . "_fc";
+    }
+
+    $submits .= '" style=""><a title="Click to sort by this column" href=\'javascript:ordering("' . $label_id . '",';
+    if ($asc_or_desc_by == $label_id) {
+      $orderrr = $custom_orderr;
+    }
+    else {
+      $orderrr = $defult_orderr;
+    }
+    $submits .= $orderrr;
+    $submits .= ')\'>
+										<span>' . $labelll[$label_id] . '</span>
+										<span class="sorting-indicator"></span>
+										</a>';
+    if ($ascdesc == $label_id && $label_id != '') {
+      if ($orderrr == 1) {
+        $submits .= '<img title="Sorted by ascending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/asc.png" ></img>';
+      }
+      else {
+        $submits .= '<img title="Sorted by descending" src="' . base_path() . drupal_get_path('module', 'form_maker') . '/images/desc.png" ></img>';
+      }
+    }
+    $submits .= '
+								</th>';
+  }
+  $submits .= '
+							<th style="width:80px">
+								<a title="Delete selected rows" href=\'javascript:if (document.main_show_form.boxchecked.value==0){alert(Drupal.t("Please first make a selection from the list"));}else{ submit1()}\'>' . t('Delete') . '</a>
+							</th>
+						</TR>
+					</thead>
+					<tbody>';
+
+  $ids_form_grup_id = db_query("SELECT group_id FROM {form_maker_submits_table} " . $sql_text . $sql_order . " group by group_id " . $sql_ascdesc . " " . $limit . "", array_merge((array) $sql_param, (array) $sql_order_param))->fetchCol();
+
+  foreach ($ids_form_grup_id as $key => $id_form_grup_id) {
+    $value = db_query("SELECT * FROM {form_maker_submits_table} " . $sql_text . " AND group_id= :group_id", array_merge((array) $sql_param, array(':group_id' => $id_form_grup_id)));
+    $row1 = $value->fetchObject();
+    $submits .= '
+							 <tr>
+								<td style="border-right:1px solid #BEBFB9" class="submitid_fc">' . $id_form_grup_id . '</td>
+								<td style="border-right:1px solid #BEBFB9">
+									<input type="checkbox" id="cb' . $key . '" name="cid[]" value="' . $row1->group_id . '" onclick="isChecked(this.checked,' . $row1->group_id . ')">
+								</td>
+								<td style="border-right:1px solid #BEBFB9" class="submitdate_fc">' . $row1->date . '</td>
+								<td style="border-right:1px solid #BEBFB9" class="submitterip_fc">' . $row1->ip . '</td>';
+
+    foreach ($labels_id as $label_id) {
+      $element_value = db_query("SELECT element_value FROM {form_maker_submits_table} WHERE element_label= :element_label AND group_id= :group_id", array(':element_label' => $label_id, ':group_id' => $id_form_grup_id))->fetchField();
+      $submits .= '<td style="border-right:1px solid #BEBFB9" class="' . $label_id . '_fc ">';
+      if (strpos($element_value, "*@@url@@*")) {
+        $new_file = str_replace("*@@url@@*", '', $element_value);
+        $new_filename = explode('/', $new_file);
+        $element_value = '<a target="_blank" href="' . $new_file . '">' . $new_filename[count($new_filename) - 1] . '</a>';
+      }
+      if ($element_value == '::' || $element_value == '--') {
+        $element_value = '';
+      }
+      $submits .= $element_value;
+      $submits .= '</td>';
+    }
+    $submits .= '
+								<td>
+									<a title="Delete the row" href=\'javascript:submit2("' . $id_form_grup_id . '")\'>' . t('Delete') . '</a>
+                </td>
+							 </tr>';
+  }
+  $submits .= '
+					</tbody>
+				</table>
+				</fieldset>
+				</div>';
+  drupal_add_js('renderColumns();', array('type' => 'inline', 'scope' => 'footer'));
+  $form = array();
+  $form['main_show_form'] = array(
+    '#type' => 'fieldset',
+    '#value' => $submits,
+  );
+  $form['#action'] = $string_submission . $id;
+  $form['#id'] = 'main_show_form';
+  $form['#attributes'] = array('name' => 'main_show_form');
+  return $form;
+}
+
+/**
+ * Implements hook_library().
+ */
+function form_maker_library() {
+  $libraries = array(
+    'tinymce' => array(
+      'version' => '3.5.7',
+      'js' => array(
+        'sites/all/libraries/tinymce/jscripts/tiny_mce/tiny_mce.js' => array(
+          'group' => JS_LIBRARY,
+        ),
+      ),
+    ),
+  );
+  return $libraries;
+}

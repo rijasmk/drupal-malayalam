@@ -1,0 +1,5 @@
+name = Lite String Replace
+description = A small light module to replace string in entire databse. 
+core = 7.x
+configure = admin/config/lite-str-replace
+files[] = lite_str_replace.module

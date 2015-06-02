@@ -1,0 +1,147 @@
+#easy_module_hooks_viewer_container {
+  display: inline-block;
+  *display: inline;
+  font-size: 13px;
+  overflow: auto;
+  position: relative;
+  width: 100%;
+  zoom: 1;
+}
+
+#easy_module_hooks_viewer {
+  background-color: #eeeeee;
+  border: 1px solid #aaaaaa;
+  cursor: text;
+  height: auto;
+  margin: 0;
+  min-height: 29px;
+  overflow: hidden;
+  padding: 3px 0 0;
+  position: relative;
+}
+
+#easy_module_hooks_viewer .choice {
+  background-clip: padding-box;
+  background-color: #e4e4e4;
+  border: 1px solid #aaaaaa;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  color: #333333;
+  cursor: default;
+  float: left;
+  line-height: 13px;
+  list-style: none outside none;
+  margin: 3px 0 3px 5px;
+  padding: 3px 20px 3px 5px;
+  position: relative;
+}
+
+#easy_module_hooks_viewer .choice-close {
+  background: url("sprite.png") no-repeat scroll right top transparent;
+  color: transparent;
+  cursor: pointer;
+  display: block;
+  font-size: 1px;
+  height: 13px;
+  position: absolute;
+  right: 3px;
+  text-indent: -999px;
+  top: 4px;
+  width: 12px;
+}
+
+#-easy-module-generation-form .ui-widget-header {
+  background: #cccccc;
+  border: 1px solid #aaaaaa;
+  color: #222222;
+  font-weight: bold;
+}
+
+#-easy-module-generation-form .ui-corner-tl {
+  -moz-border-top-left-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+#-easy-module-generation-form .ui-corner-tr {
+  -moz-border-top-right-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+#-easy-module-generation-form .ui-corner-bl {
+  -moz-border-bottom-left-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+#-easy-module-generation-form .ui-corner-br {
+  -moz-border-bottom-right-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#-easy-module-generation-form .ui-state-default,
+#-easy-module-generation-form .ui-widget-content .ui-state-default,
+#-easy-module-generation-form .ui-widget-header .ui-state-default {
+  background: #e6e6e6;
+  border: 1px solid #d3d3d3;
+  color: #555555;
+  font-weight: normal;
+}
+
+#-easy-module-generation-form .dataTables_wrapper .ui-toolbar {
+  padding: 6px;
+}
+
+#-easy-module-generation-form table th {
+  text-transform: none;
+}
+
+#easy_module-hooks_filter input {
+  border: 1px inset #f0f0f0;
+}
+
+#-easy-module-generation-form .form-item {
+  margin: 0 0 1px;
+  padding: 1px 0;
+}
+
+#-easy-module-generation-form input[type=text] {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  height: 18px;
+  padding: 2px;
+  width: 370px;
+}
+
+#-easy-module-generation-form textarea {
+  -moz-border-top-left-radius: 4px;
+  -moz-border-top-right-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: 38px;
+}
+
+.syntaxhighlighter table {
+  overflow: hidden !important;
+}
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.node-type-tool.not-front #page {
+  padding-top: 0;
+}

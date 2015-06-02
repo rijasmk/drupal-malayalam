@@ -1,0 +1,11 @@
+INSTALLATION
+------------
+1. Upload and install the module. 
+
+2. In ZM Feedback Configuration change the values as desired. A seprate configuration section will be available for ZM Feedback.
+
+3. Feedbacks from users will come in to your mail box only if you enter valid email adress/adresses in 'To Addresses' field from configuration section.
+
+4. If you have CAPTCA Module (https://drupal.org/project/captcha) enabled, then CAPTCHA settings will display.
+
+5. To see the user submitted feedback select 'List out feedbacks' from configurations.

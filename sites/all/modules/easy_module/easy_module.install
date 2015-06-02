@@ -1,0 +1,159 @@
+<?php
+
+/**
+ * @file
+ * Install hooks.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform setup tasks when the module is installed. If the module implements
+ * hook_schema(), the database tables will be created before this hook is fired.
+ * Implementations of this hook are by convention declared in the module's
+ * .install file. The implementation can rely on the .module file being loaded.
+ * The hook will only be called the first time a module is enabled or after it
+ * is re-enabled after being uninstalled. The module's schema version will be
+ * set to the module's greatest numbered update hook.
+ */
+function easy_module_install() {
+
+  // Imports de '$hooks' variable containing the hooks' data.
+  require 'data/easy_module_hooks.data.php';
+
+  // Inserts the hooks' data.
+  $query = db_insert('easy_module_hooks')->fields(array(
+    'name',
+    'link',
+    'short_description',
+    'drupal_version',
+    'description',
+    'documentation',
+    'params_docs',
+    'signature',
+    'sample_code',
+  ));
+
+  foreach ($hooks as &$record) {
+    unset($record['id']);
+    $query->values($record);
+  }
+
+  $query->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function easy_module_uninstall() {
+
+  // Include this manually since declared Files in the .info are not
+  // automatically included while uninstalling.
+  require_once 'includes/EasyModuleConstants.inc';
+
+  // Use reflection for getting constants.
+  $o_class = new ReflectionClass('EasyModuleConstants');
+  $constants = $o_class->getConstants();
+
+  // Deletes all the created variables by this module.
+  foreach ($constants as $constant_name => $constant_value) {
+    // The database variables are named using the prefix 'DB_VAR'.
+    if (strpos($constant_name, 'DB_VAR_') === 0) {
+      variable_del($constant_value);
+    }
+  }
+}
+
+/**
+ * Obtains a schema definition structure array.
+ *
+ * For each element of the array,
+ * the key is a table name and the value is a table structure definition.
+ *
+ * @return Assoc
+ *   a schema definition structure array. For each element of the array,
+ *   the key is a table name and the value is a table structure definition.
+ */
+function easy_module_schema() {
+
+  $schema['easy_module_hooks'] = array(
+    'description' => 'The base table for Hooks data.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The primary identifier of the hook.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'drupal_version' => array(
+        'description' => 'The Drupal version the hook is oriented.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 7,
+      ),
+      'name' => array(
+        'description' => 'The name of the Hook. E.g.: hook_theme',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'link' => array(
+        'description' => 'The link to the Hook page.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'short_description' => array(
+        'description' => 'The short description of the Hook.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'description' => array(
+        'description' => 'The description of the Hook.',
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => FALSE,
+      ),
+      'documentation' => array(
+        'description' => 'The documentation of the Hook.',
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => FALSE,
+      ),
+      'params_docs' => array(
+        'description' => 'The documentation of the Hook arguments and its return value.',
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => FALSE,
+      ),
+      'signature' => array(
+        'description' => 'The hook signature. E.g. hook_theme($existing, $type, $theme, $path).',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'sample_code' => array(
+        'description' => 'The sample code for the Hook.',
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => FALSE,
+      ),
+    ),
+    'indexes' => array(
+      'drupal_version' => array('drupal_version'),
+    ),
+    'unique keys' => array(
+      'name_drupal_version' => array('name', 'drupal_version'),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}

@@ -1,0 +1,493 @@
+<?php
+/**
+ * @file
+ * Lite Feedback 
+ * A Simple and light Feedback Form
+ * Customizable Form Title, Field Labels, Submit Button Text.
+ * CAPTCHA option, if module CAPTCHA () enabled.
+ * Customizable To email addresses. 
+ * @Autohr Rijas Madurakuzhi (rijas.mk@gmail.com) 
+ */
+ 
+/**
+ * Implementation of hook_help().
+ */
+function lite_feedback_help($path, $args) {
+  if ($path == 'admin/help#lite_feedback') {
+    return t('<b>Lite Feedback</b><br />A Simple and Light Feedback Form. Customizable Form Title, Field Labels, Submit Button Text. CAPTCHA option if, module <a href="https://drupal.org/project/captcha" target="_blank"><b>CAPTCHA</b></a> enabled. Customizable <em>To</em> email addresses.<br />
+    <br />
+    1) From <em>Configuration</em> page you can modfy the form lables and helper text.<br />
+    2) To receive the feedbacks in email, please configure the To address from configuration, otherwise feedback will be stored only in Drupal.<br />
+    3) If you have CAPTCA Module (https://drupal.org/project/captcha) enabled, then CAPTCHA settings will display.<br />
+    4) From <em>Listing</em> page you can view all the submitted feedback.<br />
+    ');
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function lite_feedback_menu() {
+  $items = array();
+  $options = lite_feedback_get_options();
+  
+  $items['lite-feedback'] = array( 
+    'title' => t($options['form_title']), 
+    'description' => 'A Simple and Light Feedback Form.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('lite_feedback_form'),
+    'access callback' => TRUE
+  );
+  
+  $items['admin/config/lite-feedback'] = array(
+    'title' => 'Lite Feedback',
+    'description' => 'Configuration and Feedback Listing.',
+    'position' => 'left',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+  
+  $items['admin/config/lite-feedback/config'] = array(
+    'title' => 'Configurations',
+    'description' => 'Change the feedback form\'s configurations here.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('lite_feedback_admin_config_form'),
+    'access arguments' => array('administer site configuration'),
+  );
+  
+  $items['admin/config/lite-feedback/list'] = array(
+    'title' => 'List out feedbacks',
+    'description' => 'List out all the feedbacks',
+    'page callback' => 'lite_feedback_admin_list',
+    'access arguments' => array('administer site configuration'),
+  );
+  
+  return $items;
+}
+
+/**
+ *Form alter for admin config changes
+ */ 
+function lite_feedback_admin_config_form($form, &$form_state) {
+ $options = lite_feedback_get_options();
+ 
+ $form['form_to_email_group'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('To Email Settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+  );  
+ $form['form_to_email_group']['to_addresses'] = array(
+    '#type' => 'textfield',
+    '#title' => t('To Addresses'),
+    '#size' => 65,
+    '#maxlength' => 120,
+    '#required' => FALSE,
+    '#description' => t('Submitted feedbacks to be sent to.'),
+    '#default_value' => $options['to_addresses'],
+  );  
+ 
+ 
+ $form['form_main_group'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Form Title and Button Settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+  );
+ $form['form_main_group']['form_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Feedback Form (Page) Title'),
+    '#size' => 30,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+    '#description' => t('Change feedback form\'s Title value.'),
+    '#default_value' => $options['form_title'],
+  );
+  $form['form_main_group']['form_submit'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Feedback Submit Button\'s Value'),
+    '#size' => 30,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+    '#description' => t('Change feedback form\'s Submit Button\'s value.'),
+    '#default_value' => $options['form_submit'],
+  );   
+ 
+ $form['form_name_group'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Name Field Settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+  );          
+ $form['form_name_group']['user_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Label Value'),
+    '#size' => 30,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+    '#description' => t('Change feedback form\'s Name label.'),
+    '#default_value' => $options['user_name'],
+  );
+  $form['form_name_group']['user_name_desc'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Description Value'),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => FALSE,
+    '#description' => t('Change feedback form\'s Name descripsion.'),
+    '#default_value' => $options['user_name_desc'],
+  );
+  
+  $form['form_email_group'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Email Field Settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+  );
+  $form['form_email_group']['user_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Label Value'),
+    '#size' => 30,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+    '#description' => t('Change feedback form\'s Email label.'),
+    '#default_value' => $options['user_email'],
+  );
+  $form['form_email_group']['user_email_desc'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Description Value'),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => FALSE,
+    '#description' => t('Change feedback form\'s Email descripsion.'),
+    '#default_value' => $options['user_email_desc'],
+  );
+  
+  $form['form_feedback_group'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Feedback Field Settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+  );
+  $form['form_feedback_group']['user_feedback'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Label Value'),
+    '#size' => 30,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+    '#description' => t('Change feedback form\'s Feedback label.'),
+    '#default_value' => $options['user_feedback'],
+  );
+  $form['form_feedback_group']['user_feedback_desc'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Description Value'),
+    '#size' => 60,
+    '#maxlength' => 120,
+    '#required' => FALSE,
+    '#description' => t('Change feedback form\'s Feedback descripsion.'),
+    '#default_value' => $options['user_feedback_desc'],
+  );
+  
+  /* only if CAPTCA Module enabled */
+  if(function_exists('captcha_captcha')){
+    $captcha_types = lite_feedback_captcha_types();
+      
+    $form['form_captcha_group'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('CAPTCHA Settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );     
+  
+    $form['form_captcha_group']['form_captcha'] = array(
+    '#type' => 'checkbox', 
+    '#title' => t('Enable Captcha?'),
+    '#attributes' => ($options['form_captcha']? array('checked' => 'checked'):array()),
+    );
+    
+    $form['form_captcha_group']['form_captcha_type'] = array(
+      '#type' => 'select',
+      '#title' => t('Captcha Type'),
+      '#options' => $captcha_types,
+      '#default_value' => 0,
+      '#description' => t('Set this to <em>Yes</em> if you would like this category to be selected by default.'),
+      '#default_value' => $options['form_captcha_type'],
+      '#states' => array(
+        'visible' => array(
+          ':input[name="form_captcha"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+  }
+  
+  
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Change')
+  );
+  
+  $form['#submit'][] = 'lite_feedback_admin_config_form_submit';
+ 
+  return $form;
+}
+
+/**
+ *Submit handler for admin config form
+ */ 
+function lite_feedback_admin_config_form_submit($form, &$form_state)
+{
+  $record = array (
+  "option_row" => 1,
+  "to_addresses" => $form_state ["values"]["to_addresses"],
+  "form_title" => $form_state ["values"]["form_title"],
+  "user_name" => $form_state ["values"]["user_name"],
+  "user_name_desc" => $form_state ["values"]["user_name_desc"],
+  "user_email" => $form_state ["values"]["user_email"],
+  "user_email_desc" => $form_state ["values"]["user_email_desc"],
+  "user_feedback" => $form_state ["values"]["user_feedback"],
+  "user_feedback_desc" => $form_state ["values"]["user_feedback_desc"],
+  "form_submit" => $form_state ["values"]["form_submit"],
+  );
+  
+  if(isset($form_state ["values"]["form_captcha"]))
+    $record['form_captcha'] = $form_state ["values"]["form_captcha"];
+  if(isset($form_state ["values"]["form_captcha_type"]))
+    $record['form_captcha_type'] = $form_state ["values"]["form_captcha_type"];
+    
+  drupal_write_record ('lite_feedback_optionset', $record,array('option_row'));
+  drupal_set_message(t('Configurations are updated.'));
+  drupal_set_message(t('You may need to clear the cache for changes to get affected at the front end form'),'warning');
+}
+
+/**
+ *List out all the feedbacks in the DB and admin end
+ */ 
+function lite_feedback_admin_list()
+{
+  $rows = lite_feedback_get_feddback_list();
+  $headers = array(array('data' => t('ID')), array('data' => t('Name')), array('data' => t('Email')), array('data' => t('Feedback')),);
+  return theme('table', array('header' => $headers, 'rows' => $rows)).theme('pager');
+}
+
+/**
+ *Display feedback form at the front
+ */ 
+function lite_feedback_form($form, &$form_state) {
+ $options = lite_feedback_get_options();   
+       
+ $form['user_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t($options['user_name']),
+    '#size' => 30,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+    '#description' => ($options['user_name_desc']?t ($options['user_name_desc']):''),
+  );
+  
+  $form['user_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t($options['user_email']),
+    '#size' => 30,
+    '#maxlength' => 120,
+    '#required' => TRUE,
+    '#description' => ($options['user_email_desc']?t ($options['user_email_desc']):''),
+  );
+  
+  $form['user_feedback'] = array(
+  '#type' => 'textarea',  
+  '#title' => t($options['user_feedback']),
+  '#required' => TRUE,  
+  '#description' => ($options['user_email_desc']?t ($options['user_feedback_desc']):''),
+  );
+  
+  /* only if CAPTCA Module enabled */
+  if($options['form_captcha'] && function_exists('captcha_captcha')){  
+    $form['user_captcha_element'] = array(
+      '#type' => 'captcha',
+      '#captcha_type' => $options['form_captcha_type'],
+    );
+  }
+  
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t($options['form_submit'])
+  );
+ 
+  return $form;
+}
+
+/**
+ *Front end feedback form validation before submit
+ */ 
+function lite_feedback_form_validate($form, &$form_state) {
+  if (isset($form_state['values']['user_name'])) {
+    if ($error = lite_feedback_validate_name($form_state['values']['user_name'])) {
+      form_set_error('user_name', $error);
+    }
+  }    
+  if (!(valid_email_address($form_state['values']['user_email']))){
+    form_set_error('user_email', t('Please enter a valid email address.'));
+  }
+}
+
+/**
+ *Submit handler for front end feedback form
+ */
+function lite_feedback_form_submit($form, &$form_state) {
+    $options = lite_feedback_get_options();
+    
+    $insert_id = db_insert('lite_feedback_list')
+    ->fields(array(
+      'user_name' => $form_state['values']['user_name'],
+      'user_email' => $form_state['values']['user_email'],
+      'user_feedback' => $form_state['values']['user_feedback'],
+    ))
+    ->execute();
+    
+    if($insert_id){
+      if($options['to_addresses']){      
+	      if(lite_feedback_send_mail($options['to_addresses'], $form_state['values']['user_email'], t('Feedback from '.$form_state['values']['user_name'].' for your site '.variable_get('site_name')), $form_state['values']['user_feedback'])){
+	        drupal_set_message(t('Hi '.$form_state['values']['user_name'].',<br />Your feedback is submitted.<br /> Thank you!'));
+	      }
+	      else{
+	        drupal_set_message(t('Sorry '.$form_state['values']['user_name'].',<br />For quick response send a mail directly to '.$options['to_addresses']));
+	      }
+      }
+      else{
+      	drupal_set_message(t('Hi '.$form_state['values']['user_name'].',<br />Your feedback is submitted.<br /> Thank you!'));
+      }
+    }
+    else{
+      drupal_set_message(t('Sorry '.$form_state['values']['user_name'].',<br />Un-expected error, please try again.'),'error');
+    }
+}
+
+/**
+ *Function to retrive option values from DB
+ */
+function lite_feedback_get_options(){    
+  $query = db_select('lite_feedback_optionset', 'zmfc');
+  $options = $query->fields('zmfc', array('to_addresses','form_title','user_name','user_name_desc','user_email','user_email_desc','user_feedback','user_feedback_desc','form_submit','form_captcha','form_captcha_type'))
+      ->condition('option_row', '1', '=')
+      ->range(0, 1)
+      ->execute()
+      ->fetchAssoc();
+  return $options;
+}
+
+/**
+ *Function to retrive submitted feedbacks from DB
+ */
+function lite_feedback_get_feddback_list(){    
+  $query = db_select('lite_feedback_list', 'zmfl');
+  $query  = $query ->fields('zmfl', array('id','user_name','user_email','user_feedback'))      
+      ->orderBy('id', 'DESC')
+      ->extend('PagerDefault')
+      ->limit(5);
+  $result = $query->execute();
+  $rows = array();  
+  foreach ($result as $row) {
+    $rows[] = array(
+        $row->id, 
+        $row->user_name, 
+        $row->user_email, 
+        '<textarea readonly rows="10" cols="50">'.$row->user_feedback.'</textarea>', 
+    );
+  }  
+  return $rows;
+}
+
+/**
+ * Verify the syntax of the given name.
+ */
+function lite_feedback_validate_name($name) {
+  $options = lite_feedback_get_options();
+  $name_label = $options['user_name'];
+  if (!$name) {
+    return t('You must enter a '.$name_label.'.');
+  }
+  if (substr($name, 0, 1) == ' ') {
+    return t('The '.$name_label.' cannot begin with a space.');
+  }
+  if (substr($name, -1) == ' ') {
+    return t('The '.$name_label.' cannot end with a space.');
+  }
+  if (strpos($name, '  ') !== FALSE) {
+    return t('The '.$name_label.' cannot contain multiple spaces in a row.');
+  }
+  if (preg_match('/[^\x{80}-\x{F7} a-z0-9@_.\'-]/i', $name)) {
+    return t('The '.$name_label.' contains an illegal character.');
+  }
+  if (preg_match('/[\x{80}-\x{A0}' .         // Non-printable ISO-8859-1 + NBSP
+                  '\x{AD}' .                // Soft-hyphen
+                  '\x{2000}-\x{200F}' .     // Various space characters
+                  '\x{2028}-\x{202F}' .     // Bidirectional text overrides
+                  '\x{205F}-\x{206F}' .     // Various text hinting characters
+                  '\x{FEFF}' .              // Byte order mark
+                  '\x{FF01}-\x{FF60}' .     // Full-width latin
+                  '\x{FFF9}-\x{FFFD}' .     // Replacement characters
+                  '\x{0}-\x{1F}]/u',        // NULL byte and control characters
+                  $name)) {
+    return t('The '.$name_label.' contains an illegal character.');
+  }
+  if (drupal_strlen($name) > USERNAME_MAX_LENGTH) {
+    return t('The '.$name_label.' %name is too long: it must be %max characters or less.', array('%name' => $name, '%max' => USERNAME_MAX_LENGTH));
+  }
+}
+
+function lite_feedback_send_mail($to, $from, $subject, $message) {
+  $my_module = 'lite_feedback';
+  $my_mail_token = microtime();
+  //$from = variable_get('system_mail', 'My Email Address <example@example.com>');
+  $message = array(
+    'id' => $my_module . '_' . $my_mail_token,
+    'to' => $to,
+    'subject' => $subject,
+    'body' => array($message),
+    'headers' => array(
+      'From' => $from, 
+      'Sender' => $from, 
+      'Return-Path' => $from,
+    ),
+  );
+  $system = drupal_mail_system($my_module, $my_mail_token);
+  $message = $system->format($message);
+  if ($system->mail($message)) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Available CAPTCHA Types
+ */ 
+function lite_feedback_captcha_types() {
+  $captcha_types = array();  
+  foreach (module_implements('captcha') as $module) {
+    $result = call_user_func_array($module . '_captcha', array('list'));
+    if (is_array($result)) {
+      foreach ($result as $type) {
+        $captcha_types["$module/$type"] = t('@type (from module @module)', array('@type' => $type, '@module' => $module));
+      }
+    }
+  }
+  return $captcha_types;
+}
+
+/**
+ *To Debug the array value. Only for developers
+ *I like to see things through print_r rather dpm or dsm 
+ */ 
+function lite_feedback_dbg($arr_val, $exit = FALSE)
+{
+  echo '<pre>';
+  print_r($arr_val);
+  echo '</pre>';
+  if($exit)
+    exit;
+  return;
+}

@@ -1,0 +1,149 @@
+<?php
+/**
+ * @file
+ * Installation actions for Lite Feedback
+ * @Autohr Rijas Madurakuzhi (rijas.mk@gmail.com) 
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function lite_feedback_schema() {
+  $schema = array();
+
+  $schema['lite_feedback_optionset'] = array(
+    'description' => 'Store option sets for lite_feedback variables.',
+    'fields' => array(
+      'option_row' => array(
+        'description' => 'ID of the row',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'to_addresses' => array(
+        'description' => 'Label for user feedback',
+        'type' => 'text',
+        'size' => 'small',
+        'not null' => FALSE,
+      ),
+      'form_title' => array(
+        'description' => 'Form Title',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ), 
+      'user_name' => array(
+        'description' => 'Label for user name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'user_name_desc' => array(
+        'description' => 'Description for user name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'user_email' => array(
+        'description' => 'Label for user email',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'user_email_desc' => array(
+        'description' => 'Description for user email',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'user_feedback' => array(
+        'description' => 'Label for user feedback',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'user_feedback_desc' => array(
+        'description' => 'Description for user feedback',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'form_submit' => array(
+        'description' => 'Form Submit button value',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),           
+      'form_captcha' => array(
+        'description' => 'Form Capthca enabled',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'form_captcha_type' => array(
+        'description' => 'Form Capthca Type',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+    ),    
+  );
+  
+  $schema['lite_feedback_list'] = array(
+    'description' => 'Stores feddbacks',
+    'fields' => array(
+      'id' => array(
+        'description' => t('Feddback unique identifier'),
+        'type' => 'serial',
+        'size' => 'big',
+        'unsigned' => true,
+        'not null' => true,
+      ),
+      'user_name' => array(
+        'description' => 'Label for user name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'user_email' => array(
+        'description' => 'Label for user email',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'user_feedback' => array(
+        'description' => 'Label for user feedback',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),            
+    ),   
+    'primary key' => array('id'), 
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ *
+ * Adds a 'default' option set for fresh installs.
+ */
+function lite_feedback_install() {
+  $results = db_select('lite_feedback_optionset','zmf')->fields('zmf', array('option_row'))->condition('option_row', 1)->range(0, 1)->execute()->fetchAll();
+  if (!count($results)) {
+      $fields = array('option_row' => 1,
+      'form_title' => 'Submit your Feedback',
+      'user_name' => 'Name', 
+      'user_name_desc' => 'How we should address you?',
+      'user_email' => 'Email', 
+      'user_email_desc' => 'We promise NO SPAM from our end!',
+      'user_feedback' => 'Feedback',
+      'user_feedback_desc' => 'Please provide your feedback here.',
+      'form_submit' => 'Submit',
+      'form_captcha' => 0,
+      'form_captcha_type' => 'captcha/Math',
+      );
+      db_insert('lite_feedback_optionset')->fields($fields)->execute();
+  }
+}
