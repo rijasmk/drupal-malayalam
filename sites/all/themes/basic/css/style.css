@@ -1,0 +1,410 @@
+/* Font styles. */
+/* line 2, ../sass/style.sass */
+body {
+  background: url("../images/bob-denver-bg.jpg") no-repeat 50% 0;
+  margin: 0;
+  /* Setting up font size, leading and font family
+   * http://www.markboulton.co.uk/journal/comments/five-simple-steps-to-better-typography */
+  font: 14px/1.5em "Scada", sans-serif, Arial;
+  letter-spacing: 0.03em;
+  color: #333;
+}
+
+/* Links */
+/* line 13, ../sass/style.sass */
+a:link, a:visited {
+  color: #484848;
+  text-decoration: none;
+  text-shadow: 1px 1px 1px #333333;
+}
+
+/* line 19, ../sass/style.sass */
+a:hover, a:active {
+  color: #dddddd;
+  text-decoration: underline;
+}
+
+/* Titles. */
+/* line 24, ../sass/style.sass */
+#site-name {
+  font-size: 2.2em;
+  line-height: 1.3em;
+  font-weight: 300;
+  padding: 0 0 0.5em;
+  margin: 0;
+}
+
+/* line 31, ../sass/style.sass */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3em;
+}
+
+/* line 34, ../sass/style.sass */
+h1 {
+  font-size: 2.2em;
+  font-weight: 300;
+  padding: 0 0 0.5em;
+  margin: 0;
+}
+
+/* line 40, ../sass/style.sass */
+h2 {
+  font-size: 1.8em;
+  font-weight: 300;
+  margin-bottom: 0.75em;
+}
+
+/* line 45, ../sass/style.sass */
+h3 {
+  font-size: 1.4em;
+  margin-bottom: 1em;
+}
+
+/* line 49, ../sass/style.sass */
+h4 {
+  font-size: 1.2em;
+  margin-bottom: 0.8em;
+}
+
+/* line 53, ../sass/style.sass */
+h5 {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+/* line 58, ../sass/style.sass */
+h6 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/* Paragraph styles. */
+/* line 63, ../sass/style.sass */
+p {
+  margin: 0 0 1em 0;
+}
+
+/* List styles. */
+/* line 67, ../sass/style.sass */
+ul, ol {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Table styles. */
+/* line 72, ../sass/style.sass */
+table {
+  width: 99%;
+}
+
+/* line 77, ../sass/style.sass */
+tr.even td,
+tr.odd td {
+  padding: 10px 5px;
+}
+
+/* line 80, ../sass/style.sass */
+tr.odd {
+  background-color: white;
+}
+
+/* Code. */
+/* line 84, ../sass/style.sass */
+pre, code, tt {
+  font: 1em "andale mono", "lucida console", monospace;
+  line-height: 1.5;
+}
+
+/* line 88, ../sass/style.sass */
+pre {
+  background-color: #efefef;
+  display: block;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #aaaaaa;
+}
+
+/* List styles. */
+/* line 96, ../sass/style.sass */
+ul {
+  list-style-type: disc;
+}
+/* line 98, ../sass/style.sass */
+ul ul {
+  list-style-type: circle;
+}
+/* line 100, ../sass/style.sass */
+ul ul ul {
+  list-style-type: square;
+}
+/* line 102, ../sass/style.sass */
+ul ul ul ul {
+  list-style-type: circle;
+}
+
+/* line 105, ../sass/style.sass */
+ol {
+  list-style-type: decimal;
+}
+/* line 107, ../sass/style.sass */
+ol ol {
+  list-style-type: lower-alpha;
+}
+/* line 109, ../sass/style.sass */
+ol ol ol {
+  list-style-type: decimal;
+}
+
+/* Abbreviation. */
+/* line 113, ../sass/style.sass */
+abbr {
+  border-bottom: 1px dotted #666666;
+  cursor: help;
+  white-space: nowrap;
+}
+
+/* UI improvments. */
+/* line 119, ../sass/style.sass */
+#edit-title {
+  font-size: 24px;
+  width: 99%;
+}
+
+/* line 123, ../sass/style.sass */
+#system-themes-form img {
+  width: 100px;
+}
+
+/* line 126, ../sass/style.sass */
+.form-item .description {
+  font-style: italic;
+  line-height: 1.2em;
+  font-size: 0.8em;
+  margin-top: 5px;
+  color: #777777;
+}
+
+/* line 133, ../sass/style.sass */
+#edit-delete {
+  color: #cc0000;
+}
+
+/* Console, style from slate theme. */
+/* line 137, ../sass/style.sass */
+div.messages {
+  padding: 9px;
+  margin: 1em 0;
+  color: #003366;
+  background: #bbddff;
+  border: 1px solid #aaccee;
+}
+
+/* line 144, ../sass/style.sass */
+div.warning {
+  color: #884400;
+  background: #ffee66;
+  border-color: #eedd55;
+}
+
+/* line 149, ../sass/style.sass */
+div.error {
+  color: white;
+  background: #ee6633;
+  border-color: #dd5522;
+}
+
+/* line 154, ../sass/style.sass */
+div.status {
+  color: #336600;
+  background: #ccff88;
+  border-color: #bbee77;
+}
+
+/* Region Colors. delete when starting a new theme. */
+/* line 160, ../sass/style.sass */
+#header, #footer,
+#sidebar-first,
+#sidebar-second,
+#navigation {
+  background: rgba(170, 170, 170, 0.2);
+}
+
+/* line 2, ../sass/components/neat/grid/_grid.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 10, ../sass/_custom.sass */
+body {
+  background-size: cover;
+}
+
+/* line 13, ../sass/_custom.sass */
+#page {
+  /*background-color: rgba(254, 230, 145, 0.6);*/
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  margin-top: 10px;
+}
+
+/* line 19, ../sass/_custom.sass */
+#block-locale-language h2.block-title {
+  display: none;
+}
+
+/* line 23, ../sass/_custom.sass */
+#header ul, #header li, #footer ul, #footer li, #block-locale-language ul, #block-locale-language li {
+  list-style: none;
+}
+
+/* line 26, ../sass/_custom.sass */
+#header, #footer, #sidebar-first, #sidebar-second, #navigation {
+  background: none;
+}
+
+/* line 29, ../sass/_custom.sass */
+ul.menu {
+  border: none;
+  list-style: none;
+  text-align: left;
+  float: left;
+}
+/* line 34, ../sass/_custom.sass */
+ul.menu li, ul.menu li.leaf {
+  list-style-image: none;
+  list-style-type: none;
+  float: right;
+}
+/* line 38, ../sass/_custom.sass */
+ul.menu li a.active {
+  color: #dddddd;
+}
+
+/* line 41, ../sass/_custom.sass */
+#header-region {
+  float: right;
+  position: relative;
+  top: 5px;
+  width: 75%;
+}
+
+/* line 47, ../sass/_custom.sass */
+#block-locale-language li a.active {
+  color: #dddddd;
+}
+
+/* line 50, ../sass/_custom.sass */
+#main {
+  padding: 20px 0;
+}
+
+/* line 54, ../sass/_custom.sass */
+#footer .copyright {
+  font-size: 12px;
+  text-align: center;
+}
+/* line 57, ../sass/_custom.sass */
+#footer ul.menu {
+  float: right;
+}
+
+/* line 60, ../sass/_custom.sass */
+h1.title, h1#page-title, .view h2 {
+  margin: 0 0 10px;
+  line-height: 1em;
+  background: #484848;
+  padding: 5px 10px;
+  font-size: 20px;
+  color: white;
+}
+
+/* line 68, ../sass/_custom.sass */
+.sidebar-submit-joke {
+  font-size: 20px;
+  background: #484848;
+  color: white;
+  display: block;
+  padding: 5px 10px;
+  width: 95%;
+  margin: 0;
+  text-align: right;
+}
+
+/* line 78, ../sass/_custom.sass */
+.view h2 a, a.sidebar-submit-joke {
+  color: white;
+}
+
+/* line 81, ../sass/_custom.sass */
+#content-header div.tabs {
+  margin: 0;
+}
+
+/* line 85, ../sass/_custom.sass */
+.i18n-ml .view h2, .i18n-ml .sidebar-submit-joke, .i18n-ml h1.title {
+  font-size: 17px;
+}
+
+/* line 90, ../sass/_custom.sass */
+.content .field-name-field-tags .field-item {
+  float: right;
+  margin: 0 10px 0 0;
+}
+/* line 93, ../sass/_custom.sass */
+.content .field-name-field-tags .field-label {
+  display: none;
+}
+
+/* line 97, ../sass/_custom.sass */
+.links li.node-readmore {
+  padding: 0;
+  font-weight: bold;
+}
+/* line 100, ../sass/_custom.sass */
+.links li.socialmedia_share-default {
+  float: right;
+  clear: right;
+  padding: 0;
+}
+
+/* line 107, ../sass/_custom.sass */
+.view-display-id-page .links li.node-readmore {
+  display: none;
+}
+
+@media only screen and (min-width: 999px) {
+  /* line 111, ../sass/_custom.sass */
+  #content-area .field-item img {
+    width: 100%;
+    height: auto;
+  }
+}
+/* line 2, ../sass/components/neat/grid/_grid.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.feedflare img {
+  width: auto !important;
+}
+
+#header {
+  background: rgba(244, 1, 4, 0.5) none repeat scroll 0 0;
+  border-radius: 30px 30px 0 0;
+  padding: 10px;
+}
+
+#header .block {
+  float: left;
+  height: 100px;
+  width: 85%;
+}
+#header .block.block-locale {
+  float: right;
+  width: 12%;
+}

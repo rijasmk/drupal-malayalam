@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'ml-nila03regular';
+    src: url('fonts/ml-nila/ml-nila03-webfont.eot');
+    src: url('fonts/ml-nila/ml-nila03-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ml-nila/ml-nila03-webfont.woff') format('woff'),
+         url('fonts/ml-nila/ml-nila03-webfont.ttf') format('truetype'),
+         url('fonts/ml-nila/ml-nila03-webfont.svg#ml-nila03regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ml-nila02regular';
+    src: url('fonts/ml-nila/ml-nila02-webfont.eot');
+    src: url('fonts/ml-nila/ml-nila02-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ml-nila/ml-nila02-webfont.woff') format('woff'),
+         url('fonts/ml-nila/ml-nila02-webfont.ttf') format('truetype'),
+         url('fonts/ml-nila/ml-nila02-webfont.svg#ml-nila02regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body
+{
+    font-family: 'ml-nila02regular',Georgia, Times, "Times New Roman", serif;
+}
+
+body.front #content h2 a, body.page-blog #content .node h2 a, body.page-comment #content .node h2 a,
+#header .block-search .form-text,
+#header .block-search-by-page .form-text,
+#content #edit-submit, 
+#content #edit-submit-1, 
+#content #edit-preview, 
+#content #edit-reset, 
+#content #edit-vote, 
+#content #edit-delete,
+.comment ul.links li.comment-delete a,
+.comment ul.links li.comment-edit a,
+.comment ul.links li.comment-reply a,
+#sidebar #edit-submit,
+#sidebar .form-submit,
+.block-menu li a,
+#top-bar #block-locale-language h2,
+p#slogan,
+.not-front #content h1.node-title{
+    font-family: 'ml-nila03regular',Georgia, Times, "Times New Roman", serif;
+}

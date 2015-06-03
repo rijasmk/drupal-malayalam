@@ -1,0 +1,114 @@
+// Custom
+// ------
+// This file is used to define custom overrides and
+// style changes to be used for building your theme.
+// Documentation: http://sass-lang.com/docs/yardoc/_index.html
+
+// Import variables and mixins to be used.
+@import _config.sass
+
+body
+  background-size: cover
+  
+#page
+  background-color: rgba(56, 90, 123, 0.6)
+  padding: 10px
+  margin-top: 10px
+
+#block-locale-language
+  h2.block-title
+    display: none
+
+#header, #footer, #block-locale-language  
+  ul, li
+    list-style: none
+
+#header, #footer, #sidebar-first, #sidebar-second, #navigation
+  background: none
+    
+ul.menu
+  border: none    
+  list-style: none
+  text-align: left
+  float: left    
+  li, li.leaf
+    list-style-image: none
+    list-style-type: none
+    float: right
+  li a.active
+    color: #ddd
+
+#header-region
+  float: right
+  position: relative
+  top: -70px
+    
+#block-locale-language
+  li a.active
+    color: #ddd
+
+#main
+  padding: 20px 0
+  
+#footer
+  .copyright
+    font-size: 12px
+    text-align: center
+  ul.menu
+    float: right
+    
+h1.title, h1#page-title, .view h2
+  margin: 0 0 10px
+  line-height: 1em
+  background: #385A7B
+  padding: 5px 10px
+  font-size: 20px
+  color: #fff
+
+.sidebar-submit-joke
+  font-size: 20px
+  background: #385A7B
+  color: #fff
+  display: block
+  padding: 5px 10px
+  width: 95%
+  margin: 0
+  text-align: right
+
+.view h2 a, a.sidebar-submit-joke
+  color: #fff
+
+#content-header div.tabs
+  margin: 0
+
+.i18n-ml
+  .view h2, .sidebar-submit-joke, h1.title
+    font-size: 17px
+    
+.content
+  .field-name-field-tags
+    .field-item
+      float: right
+      margin: 0 10px 0 0
+    .field-label
+      display: none
+      
+.links
+  li.node-readmore
+    padding: 0
+    font-weight: bold
+  li.socialmedia_share-default
+    float: right
+    clear: right
+    padding: 0
+    
+.view-display-id-page
+  .links
+    li.node-readmore
+      display: none
+      
+@media only screen and (min-width : 999px)
+  #content-area .field-item img
+    width: 100%
+    height: auto
+     
